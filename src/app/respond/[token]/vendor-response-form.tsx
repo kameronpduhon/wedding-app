@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { createClient } from '@/lib/supabase/client'
 
 interface VendorResponseFormProps {
   requestId: string
@@ -32,69 +31,34 @@ export function VendorResponseForm({
     setError(null)
 
     try {
-      const supabase = createClient()
-
-      // 1. Create the response record
-      const { data: response, error: responseError } = await supabase
-        .from('responses')
-        .insert({
-          request_id: requestId,
-          vendor_note: vendorNote || null
-        })
-        .select()
-        .single()
-
-      if (responseError) throw responseError
-
-      // 2. Upload files if provided
-      const uploadFile = async (file: File, fileType: 'invoice' | 'contract') => {
-        const fileExt = file.name.split('.').pop()
-        const filePath = `${token}/${fileType}-${Date.now()}.${fileExt}`
-
-        const { error: uploadError } = await supabase.storage
-          .from('vendor-files')
-          .upload(filePath, file)
-
-        if (uploadError) throw uploadError
-
-        // Record file in database
-        const { error: fileError } = await supabase
-          .from('files')
-          .insert({
-            response_id: response.id,
-            file_type: fileType,
-            file_name: file.name,
-            file_path: filePath,
-            file_size: file.size,
-            mime_type: file.type
-          })
-
-        if (fileError) throw fileError
-      }
-
+      const formData = new FormData()
+      formData.append('requestId', requestId)
+      formData.append('token', token)
+      formData.append('vendorNote', vendorNote)
+      
       if (invoiceFile) {
-        await uploadFile(invoiceFile, 'invoice')
+        formData.append('invoiceFile', invoiceFile)
       }
-
       if (contractFile) {
-        await uploadFile(contractFile, 'contract')
+        formData.append('contractFile', contractFile)
       }
 
-      // 3. Mark request as completed
-      const { error: updateError } = await supabase
-        .from('requests')
-        .update({ 
-          status: 'completed',
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', requestId)
+      const response = await fetch('/api/respond', {
+        method: 'POST',
+        body: formData
+      })
 
-      if (updateError) throw updateError
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit')
+      }
 
       setIsSubmitted(true)
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Submit error:', err)
-      setError('Something went wrong. Please try again.')
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong'
+      setError(errorMessage)
     } finally {
       setIsSubmitting(false)
     }

@@ -1,6 +1,13 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import { VendorResponseForm } from './vendor-response-form'
+
+// Use service role for public vendor page (bypasses RLS)
+// This is safe because we're only exposing data tied to a valid token
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 interface PageProps {
   params: Promise<{ token: string }>
@@ -8,10 +15,9 @@ interface PageProps {
 
 export default async function VendorResponsePage({ params }: PageProps) {
   const { token } = await params
-  const supabase = await createClient()
 
-  // Fetch request with vendor and wedding info
-  const { data: request, error } = await supabase
+  // Fetch request with vendor and wedding info using admin client
+  const { data: request, error } = await supabaseAdmin
     .from('requests')
     .select(`
       *,
@@ -23,13 +29,22 @@ export default async function VendorResponsePage({ params }: PageProps) {
     .eq('token', token)
     .single()
 
-  if (error || !request) {
+  if (error || !request || !request.vendor) {
+    console.error('Request fetch error:', error)
+    notFound()
+  }
+
+  const vendor = request.vendor
+  const wedding = vendor.wedding
+
+  if (!wedding) {
+    console.error('Wedding not found for vendor')
     notFound()
   }
 
   // Mark as viewed if first time
   if (request.status === 'pending') {
-    await supabase
+    await supabaseAdmin
       .from('requests')
       .update({ 
         status: 'viewed', 
@@ -37,9 +52,6 @@ export default async function VendorResponsePage({ params }: PageProps) {
       })
       .eq('id', request.id)
   }
-
-  const vendor = request.vendor
-  const wedding = vendor.wedding
 
   // Format wedding date
   const weddingDate = wedding.wedding_date 
@@ -67,7 +79,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
           <div className="text-5xl mb-4">💒</div>
           <h1 className="text-2xl font-bold text-gray-900">
             {wedding.partner1_name}
-            {wedding.partner2_name ? ` & ${wedding.partner2_name}` : ''}'s Wedding
+            {wedding.partner2_name ? ` & ${wedding.partner2_name}` : ''}&apos;s Wedding
           </h1>
           {weddingDate && (
             <p className="text-gray-600 mt-1">{weddingDate}</p>
@@ -103,14 +115,14 @@ export default async function VendorResponsePage({ params }: PageProps) {
           {request.personal_note && (
             <div className="mb-6 bg-gray-50 rounded-lg p-4">
               <p className="text-sm text-gray-500 mb-1">💬 Note from {wedding.partner1_name}:</p>
-              <p className="text-gray-700 italic">"{request.personal_note}"</p>
+              <p className="text-gray-700 italic">&quot;{request.personal_note}&quot;</p>
             </div>
           )}
 
           {/* Status Badge */}
           {request.status === 'completed' ? (
             <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <p className="text-green-700 font-medium">✅ You've already submitted a response</p>
+              <p className="text-green-700 font-medium">✅ You&apos;ve already submitted a response</p>
               <p className="text-green-600 text-sm mt-1">Thank you!</p>
             </div>
           ) : (

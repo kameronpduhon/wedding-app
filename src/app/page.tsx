@@ -41,28 +41,18 @@ export default function Home() {
 
         {/* CTA */}
         <div className="text-center">
-          <button className="px-8 py-4 bg-pink-500 text-white rounded-xl font-semibold text-lg hover:bg-pink-600 transition-colors shadow-lg shadow-pink-200">
-            Get Started — It's Free
-          </button>
+          <a 
+            href="/signup"
+            className="inline-block px-8 py-4 bg-pink-500 text-white rounded-xl font-semibold text-lg hover:bg-pink-600 transition-colors shadow-lg shadow-pink-200"
+          >
+            Get Started — It&apos;s Free
+          </a>
           <p className="text-gray-500 text-sm mt-3">
             Free for up to 3 vendors. No credit card required.
           </p>
-        </div>
-
-        {/* Dev Note - remove in production */}
-        <div className="mt-20 p-6 bg-yellow-50 border border-yellow-200 rounded-xl">
-          <h3 className="font-semibold text-yellow-800 mb-2">🛠️ Dev Mode</h3>
-          <p className="text-yellow-700 text-sm mb-3">
-            To test the vendor response page:
+          <p className="text-gray-400 text-sm mt-2">
+            Already have an account? <a href="/login" className="text-pink-500 hover:text-pink-600">Sign in</a>
           </p>
-          <ol className="text-yellow-700 text-sm list-decimal list-inside space-y-1">
-            <li>Add SUPABASE_SERVICE_ROLE_KEY to .env.local</li>
-            <li>POST to /api/seed to create test data</li>
-            <li>Visit the returned testUrl</li>
-          </ol>
-          <pre className="mt-3 bg-yellow-100 p-3 rounded text-xs overflow-x-auto">
-{`curl -X POST http://localhost:3000/api/seed`}
-          </pre>
         </div>
       </div>
     </div>
