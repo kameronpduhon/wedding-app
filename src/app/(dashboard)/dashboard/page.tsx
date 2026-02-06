@@ -2,7 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LogoutButton } from './logout-button'
-import { getCategoryIcon, RingsIcon, PlusIcon, SunIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
+import { getCategoryIcon, PlusIcon, SunIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
+import { LogoIcon } from '@/components/logo'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -70,9 +71,7 @@ export default async function DashboardPage() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65]">
-              <RingsIcon size={20} />
-            </div>
+            <LogoIcon size={40} />
             <div>
               <h1 className="font-semibold text-gray-900">
                 {wedding.partner1_name}

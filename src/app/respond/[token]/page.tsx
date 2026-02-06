@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import { VendorResponseForm } from './vendor-response-form'
-import { RingsIcon } from '@/components/icons'
+import { LogoIcon } from '@/components/logo'
 
 // Use service role for public vendor page (bypasses RLS)
 // This is safe because we're only exposing data tied to a valid token
@@ -80,8 +80,8 @@ export default async function VendorResponsePage({ params }: PageProps) {
       <div className="max-w-lg mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto mb-4">
-            <RingsIcon size={32} />
+          <div className="flex justify-center mb-4">
+            <LogoIcon size={64} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">
             {wedding.partner1_name}

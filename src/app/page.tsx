@@ -1,4 +1,5 @@
-import { RingsIcon, MailIcon, ClipboardIcon, SparklesIcon } from '@/components/icons'
+import { MailIcon, ClipboardIcon, SparklesIcon } from '@/components/icons'
+import { LogoIcon } from '@/components/logo'
 
 export default function Home() {
   return (
@@ -6,11 +7,11 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 py-20">
         {/* Hero */}
         <div className="text-center mb-16">
-          <div className="w-20 h-20 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto mb-6">
-            <RingsIcon size={40} />
+          <div className="flex justify-center mb-6">
+            <LogoIcon size={80} />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Wed & Gather
+          <h1 className="text-4xl md:text-5xl font-bold text-[#2C3E2D] mb-4">
+            Wed <span className="text-[#87A98F]">&</span> Gather
           </h1>
           <p className="text-lg text-[#5C7C65] font-medium mb-2">Wedding Vendor Coordination</p>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">

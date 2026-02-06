@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { RingsIcon } from '@/components/icons'
+import { LogoIcon } from '@/components/logo'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -38,10 +38,8 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block">
-            <div className="w-16 h-16 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto">
-              <RingsIcon size={32} />
-            </div>
+          <Link href="/" className="inline-flex justify-center">
+            <LogoIcon size={64} />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 mt-4">Welcome back</h1>
           <p className="text-gray-600 mt-1">Sign in to manage your wedding</p>

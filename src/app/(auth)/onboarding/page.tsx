@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { RingsIcon, ArrowRightIcon } from '@/components/icons'
+import { ArrowRightIcon } from '@/components/icons'
+import { LogoIcon } from '@/components/logo'
 
 export default function OnboardingPage() {
   const [partner1Name, setPartner1Name] = useState('')
@@ -65,8 +66,8 @@ export default function OnboardingPage() {
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto">
-            <RingsIcon size={32} />
+          <div className="flex justify-center">
+            <LogoIcon size={64} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mt-4">Tell us about your wedding</h1>
           <p className="text-gray-600 mt-1">We&apos;ll use this to personalize your experience</p>
