@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { RingsIcon } from '@/components/icons'
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState('')
@@ -40,12 +41,14 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <span className="text-5xl">💒</span>
+            <div className="w-16 h-16 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto">
+              <RingsIcon size={32} />
+            </div>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 mt-4">Create your account</h1>
           <p className="text-gray-600 mt-1">Start coordinating your wedding vendors</p>
@@ -63,7 +66,7 @@ export default function SignupPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="Jane Smith"
               />
             </div>
@@ -77,7 +80,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="you@example.com"
               />
             </div>
@@ -92,7 +95,7 @@ export default function SignupPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="••••••••"
               />
               <p className="text-xs text-gray-500 mt-1">At least 6 characters</p>
@@ -112,7 +115,7 @@ export default function SignupPage() {
                 transition-all duration-200
                 ${isLoading 
                   ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-pink-500 hover:bg-pink-600'
+                  : 'bg-[#87A98F] hover:bg-[#5C7C65]'
                 }
               `}
             >
@@ -122,7 +125,7 @@ export default function SignupPage() {
 
           <p className="text-center text-gray-600 text-sm mt-6">
             Already have an account?{' '}
-            <Link href="/login" className="text-pink-600 hover:text-pink-700 font-medium">
+            <Link href="/login" className="text-[#5C7C65] hover:text-[#87A98F] font-medium">
               Sign in
             </Link>
           </p>

@@ -4,25 +4,44 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { 
+  ArrowLeftIcon, 
+  CameraIcon, 
+  VideoIcon, 
+  UtensilsIcon, 
+  FlowerIcon, 
+  MusicIcon, 
+  GuitarIcon,
+  CakeIcon,
+  MapPinIcon,
+  ClipboardIcon,
+  HeartIcon,
+  ScissorsIcon,
+  ShirtIcon,
+  CarIcon,
+  ArmchairIcon,
+  MailIcon,
+  SparklesIcon
+} from '@/components/icons'
 
 const CATEGORIES = [
-  { value: 'photographer', label: 'Photographer', emoji: '📸' },
-  { value: 'videographer', label: 'Videographer', emoji: '🎥' },
-  { value: 'caterer', label: 'Caterer', emoji: '🍽️' },
-  { value: 'florist', label: 'Florist', emoji: '💐' },
-  { value: 'dj', label: 'DJ', emoji: '🎵' },
-  { value: 'band', label: 'Band', emoji: '🎸' },
-  { value: 'cake', label: 'Cake/Bakery', emoji: '🎂' },
-  { value: 'venue', label: 'Venue', emoji: '📍' },
-  { value: 'planner', label: 'Wedding Planner', emoji: '📋' },
-  { value: 'officiant', label: 'Officiant', emoji: '💒' },
-  { value: 'hair_makeup', label: 'Hair & Makeup', emoji: '💄' },
-  { value: 'dress', label: 'Dress/Attire', emoji: '👗' },
-  { value: 'suit', label: 'Suit/Tux', emoji: '🤵' },
-  { value: 'transportation', label: 'Transportation', emoji: '🚗' },
-  { value: 'rentals', label: 'Rentals', emoji: '🪑' },
-  { value: 'invitations', label: 'Invitations', emoji: '💌' },
-  { value: 'other', label: 'Other', emoji: '✨' },
+  { value: 'photographer', label: 'Photographer', icon: CameraIcon },
+  { value: 'videographer', label: 'Videographer', icon: VideoIcon },
+  { value: 'caterer', label: 'Caterer', icon: UtensilsIcon },
+  { value: 'florist', label: 'Florist', icon: FlowerIcon },
+  { value: 'dj', label: 'DJ', icon: MusicIcon },
+  { value: 'band', label: 'Band', icon: GuitarIcon },
+  { value: 'cake', label: 'Cake/Bakery', icon: CakeIcon },
+  { value: 'venue', label: 'Venue', icon: MapPinIcon },
+  { value: 'planner', label: 'Wedding Planner', icon: ClipboardIcon },
+  { value: 'officiant', label: 'Officiant', icon: HeartIcon },
+  { value: 'hair_makeup', label: 'Hair & Makeup', icon: ScissorsIcon },
+  { value: 'dress', label: 'Dress/Attire', icon: ShirtIcon },
+  { value: 'suit', label: 'Suit/Tux', icon: ShirtIcon },
+  { value: 'transportation', label: 'Transportation', icon: CarIcon },
+  { value: 'rentals', label: 'Rentals', icon: ArmchairIcon },
+  { value: 'invitations', label: 'Invitations', icon: MailIcon },
+  { value: 'other', label: 'Other', icon: SparklesIcon },
 ]
 
 export default function NewVendorPage() {
@@ -89,13 +108,17 @@ export default function NewVendorPage() {
     router.push('/dashboard')
   }
 
+  const selectedCategory = CATEGORIES.find(c => c.value === category)
+  const IconComponent = selectedCategory?.icon || SparklesIcon
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#FDFDFB]">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
-          <Link href="/dashboard" className="text-gray-500 hover:text-gray-700">
-            ← Back
+          <Link href="/dashboard" className="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+            <ArrowLeftIcon size={16} />
+            Back
           </Link>
           <h1 className="font-semibold text-gray-900">Add Vendor</h1>
         </div>
@@ -114,7 +137,7 @@ export default function NewVendorPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="e.g. Sweet Tooth Bakery"
               />
             </div>
@@ -124,17 +147,22 @@ export default function NewVendorPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Category *
               </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat.value} value={cat.value}>
-                    {cat.emoji} {cat.label}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#5C7C65]">
+                  <IconComponent size={18} />
+                </div>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors appearance-none bg-white"
+                >
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat.value} value={cat.value}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Contact Name */}
@@ -146,7 +174,7 @@ export default function NewVendorPage() {
                 type="text"
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="e.g. Amy Johnson"
               />
             </div>
@@ -161,7 +189,7 @@ export default function NewVendorPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                   placeholder="vendor@example.com"
                 />
               </div>
@@ -173,7 +201,7 @@ export default function NewVendorPage() {
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                   placeholder="(555) 123-4567"
                 />
               </div>
@@ -188,7 +216,7 @@ export default function NewVendorPage() {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="Any notes about this vendor..."
               />
             </div>
@@ -214,7 +242,7 @@ export default function NewVendorPage() {
                   transition-all duration-200
                   ${isLoading 
                     ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-pink-500 hover:bg-pink-600'
+                    : 'bg-[#87A98F] hover:bg-[#5C7C65]'
                   }
                 `}
               >

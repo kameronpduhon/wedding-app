@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { RingsIcon, ArrowRightIcon } from '@/components/icons'
 
 export default function OnboardingPage() {
   const [partner1Name, setPartner1Name] = useState('')
@@ -60,11 +61,13 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
-          <span className="text-5xl">💒</span>
+          <div className="w-16 h-16 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto">
+            <RingsIcon size={32} />
+          </div>
           <h1 className="text-2xl font-bold text-gray-900 mt-4">Tell us about your wedding</h1>
           <p className="text-gray-600 mt-1">We&apos;ll use this to personalize your experience</p>
         </div>
@@ -83,7 +86,7 @@ export default function OnboardingPage() {
                   value={partner1Name}
                   onChange={(e) => setPartner1Name(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                   placeholder="Your name"
                 />
               </div>
@@ -95,7 +98,7 @@ export default function OnboardingPage() {
                   type="text"
                   value={partner2Name}
                   onChange={(e) => setPartner2Name(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                   placeholder="Partner's name"
                 />
               </div>
@@ -110,7 +113,7 @@ export default function OnboardingPage() {
                 type="date"
                 value={weddingDate}
                 onChange={(e) => setWeddingDate(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
               />
               <p className="text-xs text-gray-500 mt-1">Don&apos;t worry, you can change this later</p>
             </div>
@@ -124,7 +127,7 @@ export default function OnboardingPage() {
                 type="text"
                 value={venueName}
                 onChange={(e) => setVenueName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                 placeholder="e.g. The Grand Oak Estate"
               />
             </div>
@@ -140,7 +143,7 @@ export default function OnboardingPage() {
                   type="number"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                   placeholder="20,000"
                 />
               </div>
@@ -156,15 +159,20 @@ export default function OnboardingPage() {
               type="submit"
               disabled={isLoading}
               className={`
-                w-full py-3 rounded-lg font-medium text-white
+                w-full py-3 rounded-lg font-medium text-white flex items-center justify-center gap-2
                 transition-all duration-200
                 ${isLoading 
                   ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-pink-500 hover:bg-pink-600'
+                  : 'bg-[#87A98F] hover:bg-[#5C7C65]'
                 }
               `}
             >
-              {isLoading ? 'Creating...' : 'Create My Wedding →'}
+              {isLoading ? 'Creating...' : (
+                <>
+                  Create My Wedding
+                  <ArrowRightIcon size={18} />
+                </>
+              )}
             </button>
           </form>
         </div>
@@ -173,9 +181,10 @@ export default function OnboardingPage() {
         <p className="text-center text-gray-500 text-sm mt-4">
           <button 
             onClick={() => router.push('/dashboard')}
-            className="hover:text-pink-600 transition-colors"
+            className="hover:text-[#5C7C65] transition-colors flex items-center gap-1 mx-auto"
           >
-            Skip for now →
+            Skip for now
+            <ArrowRightIcon size={14} />
           </button>
         </p>
       </div>

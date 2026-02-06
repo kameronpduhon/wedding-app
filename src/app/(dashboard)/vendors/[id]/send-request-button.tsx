@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { SparklesIcon } from '@/components/icons'
 
 interface SendRequestButtonProps {
   vendorId: string
@@ -81,8 +82,8 @@ export function SendRequestButton({
   }
 
   const buttonClass = variant === 'primary'
-    ? 'px-4 py-2 bg-pink-500 text-white rounded-lg font-medium hover:bg-pink-600 transition-colors'
-    : 'px-4 py-2 bg-pink-500 text-white rounded-lg font-medium hover:bg-pink-600 transition-colors text-sm'
+    ? 'px-4 py-2 bg-[#87A98F] text-white rounded-lg font-medium hover:bg-[#5C7C65] transition-colors'
+    : 'px-4 py-2 bg-[#87A98F] text-white rounded-lg font-medium hover:bg-[#5C7C65] transition-colors text-sm'
 
   return (
     <>
@@ -101,7 +102,9 @@ export function SendRequestButton({
               // Success state - show link
               <div className="p-6">
                 <div className="text-center mb-6">
-                  <div className="text-4xl mb-3">🎉</div>
+                  <div className="w-16 h-16 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mx-auto mb-3">
+                    <SparklesIcon size={28} />
+                  </div>
                   <h3 className="text-xl font-semibold text-gray-900">Request Created!</h3>
                   <p className="text-gray-600 mt-1">Share this link with {vendorName}</p>
                 </div>
@@ -114,7 +117,7 @@ export function SendRequestButton({
                 <div className="space-y-3">
                   <button
                     onClick={handleCopy}
-                    className="w-full py-3 bg-pink-500 text-white rounded-lg font-medium hover:bg-pink-600 transition-colors"
+                    className="w-full py-3 bg-[#87A98F] text-white rounded-lg font-medium hover:bg-[#5C7C65] transition-colors"
                   >
                     {copied ? '✓ Copied!' : 'Copy Link'}
                   </button>
@@ -152,9 +155,9 @@ export function SendRequestButton({
                         type="checkbox"
                         checked={requestInvoice}
                         onChange={(e) => setRequestInvoice(e.target.checked)}
-                        className="w-5 h-5 rounded border-gray-300 text-pink-500 focus:ring-pink-500"
+                        className="w-5 h-5 rounded border-gray-300 text-[#87A98F] focus:ring-[#87A98F]"
                       />
-                      <span className="text-gray-700">📄 Invoice or Quote</span>
+                      <span className="text-gray-700">Invoice or Quote</span>
                     </label>
 
                     <label className="flex items-center gap-3 cursor-pointer">
@@ -162,9 +165,9 @@ export function SendRequestButton({
                         type="checkbox"
                         checked={requestContract}
                         onChange={(e) => setRequestContract(e.target.checked)}
-                        className="w-5 h-5 rounded border-gray-300 text-pink-500 focus:ring-pink-500"
+                        className="w-5 h-5 rounded border-gray-300 text-[#87A98F] focus:ring-[#87A98F]"
                       />
-                      <span className="text-gray-700">📝 Contract</span>
+                      <span className="text-gray-700">Contract</span>
                     </label>
 
                     <label className="flex items-center gap-3 cursor-pointer">
@@ -172,9 +175,9 @@ export function SendRequestButton({
                         type="checkbox"
                         checked={requestAvailability}
                         onChange={(e) => setRequestAvailability(e.target.checked)}
-                        className="w-5 h-5 rounded border-gray-300 text-pink-500 focus:ring-pink-500"
+                        className="w-5 h-5 rounded border-gray-300 text-[#87A98F] focus:ring-[#87A98F]"
                       />
-                      <span className="text-gray-700">📅 Availability / Dates</span>
+                      <span className="text-gray-700">Availability / Dates</span>
                     </label>
 
                     <label className="flex items-center gap-3 cursor-pointer">
@@ -182,9 +185,9 @@ export function SendRequestButton({
                         type="checkbox"
                         checked={requestPackageDetails}
                         onChange={(e) => setRequestPackageDetails(e.target.checked)}
-                        className="w-5 h-5 rounded border-gray-300 text-pink-500 focus:ring-pink-500"
+                        className="w-5 h-5 rounded border-gray-300 text-[#87A98F] focus:ring-[#87A98F]"
                       />
-                      <span className="text-gray-700">📦 Package Details</span>
+                      <span className="text-gray-700">Package Details</span>
                     </label>
                   </div>
 
@@ -197,7 +200,7 @@ export function SendRequestButton({
                       value={personalNote}
                       onChange={(e) => setPersonalNote(e.target.value)}
                       rows={3}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors text-sm"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors text-sm"
                       placeholder="Hey! Just following up on our conversation..."
                     />
                   </div>
@@ -218,7 +221,7 @@ export function SendRequestButton({
                       flex-1 py-2.5 rounded-lg font-medium text-white transition-colors
                       ${isLoading || (!requestInvoice && !requestContract && !requestAvailability && !requestPackageDetails)
                         ? 'bg-gray-300 cursor-not-allowed'
-                        : 'bg-pink-500 hover:bg-pink-600'
+                        : 'bg-[#87A98F] hover:bg-[#5C7C65]'
                       }
                     `}
                   >

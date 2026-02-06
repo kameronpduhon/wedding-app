@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { SparklesIcon } from '@/components/icons'
 
 interface VendorResponseFormProps {
   requestId: string
@@ -67,7 +68,9 @@ export function VendorResponseForm({
   if (isSubmitted) {
     return (
       <div className="text-center py-8">
-        <div className="text-5xl mb-4">🎉</div>
+        <div className="w-16 h-16 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mx-auto mb-4">
+          <SparklesIcon size={28} />
+        </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
           Thank you!
         </h3>
@@ -84,7 +87,7 @@ export function VendorResponseForm({
       {requestInvoice && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            📄 Upload Invoice or Quote
+            Upload Invoice or Quote
           </label>
           <input
             ref={invoiceInputRef}
@@ -99,22 +102,22 @@ export function VendorResponseForm({
               border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
               transition-colors duration-200
               ${invoiceFile 
-                ? 'border-green-300 bg-green-50' 
-                : 'border-gray-300 hover:border-pink-400 hover:bg-pink-50'
+                ? 'border-[#5C7C65] bg-[#E8F0E9]' 
+                : 'border-gray-300 hover:border-[#87A98F] hover:bg-[#E8F0E9]/50'
               }
             `}
           >
             {invoiceFile ? (
-              <div className="text-green-700">
-                <span className="text-2xl">✅</span>
+              <div className="text-[#5C7C65]">
+                <span className="text-2xl">✓</span>
                 <p className="mt-2 font-medium">{invoiceFile.name}</p>
-                <p className="text-sm text-green-600">Click to change</p>
+                <p className="text-sm">Click to change</p>
               </div>
             ) : (
               <div className="text-gray-500">
-                <span className="text-2xl">📎</span>
+                <span className="text-2xl">+</span>
                 <p className="mt-2">
-                  Drag & drop or <span className="text-pink-600 underline">browse files</span>
+                  Drag & drop or <span className="text-[#5C7C65] underline">browse files</span>
                 </p>
                 <p className="text-xs mt-1">PDF, JPG, PNG up to 10MB</p>
               </div>
@@ -127,7 +130,7 @@ export function VendorResponseForm({
       {requestContract && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            📝 Upload Contract
+            Upload Contract
           </label>
           <input
             ref={contractInputRef}
@@ -142,22 +145,22 @@ export function VendorResponseForm({
               border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
               transition-colors duration-200
               ${contractFile 
-                ? 'border-green-300 bg-green-50' 
-                : 'border-gray-300 hover:border-pink-400 hover:bg-pink-50'
+                ? 'border-[#5C7C65] bg-[#E8F0E9]' 
+                : 'border-gray-300 hover:border-[#87A98F] hover:bg-[#E8F0E9]/50'
               }
             `}
           >
             {contractFile ? (
-              <div className="text-green-700">
-                <span className="text-2xl">✅</span>
+              <div className="text-[#5C7C65]">
+                <span className="text-2xl">✓</span>
                 <p className="mt-2 font-medium">{contractFile.name}</p>
-                <p className="text-sm text-green-600">Click to change</p>
+                <p className="text-sm">Click to change</p>
               </div>
             ) : (
               <div className="text-gray-500">
-                <span className="text-2xl">📎</span>
+                <span className="text-2xl">+</span>
                 <p className="mt-2">
-                  Drag & drop or <span className="text-pink-600 underline">browse files</span>
+                  Drag & drop or <span className="text-[#5C7C65] underline">browse files</span>
                 </p>
                 <p className="text-xs mt-1">PDF, JPG, PNG up to 10MB</p>
               </div>
@@ -169,14 +172,14 @@ export function VendorResponseForm({
       {/* Vendor Note */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          💬 Your response (optional)
+          Your response (optional)
         </label>
         <textarea
           value={vendorNote}
           onChange={(e) => setVendorNote(e.target.value)}
           rows={3}
           placeholder="Add a note back to the couple..."
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-colors"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
         />
       </div>
 
@@ -196,7 +199,7 @@ export function VendorResponseForm({
           transition-all duration-200
           ${isSubmitting 
             ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-pink-500 hover:bg-pink-600 active:scale-[0.99]'
+            : 'bg-[#87A98F] hover:bg-[#5C7C65] active:scale-[0.99]'
           }
         `}
       >
@@ -209,7 +212,7 @@ export function VendorResponseForm({
             Submitting...
           </span>
         ) : (
-          'Submit Response →'
+          'Submit Response'
         )}
       </button>
     </form>

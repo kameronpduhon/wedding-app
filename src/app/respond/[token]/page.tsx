@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import { VendorResponseForm } from './vendor-response-form'
+import { RingsIcon } from '@/components/icons'
 
 // Use service role for public vendor page (bypasses RLS)
 // This is safe because we're only exposing data tied to a valid token
@@ -72,11 +73,13 @@ export default async function VendorResponsePage({ params }: PageProps) {
   if (request.request_contact_update) requestedItems.push('Contact Info Update')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white">
       <div className="max-w-lg mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="text-5xl mb-4">💒</div>
+          <div className="w-16 h-16 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto mb-4">
+            <RingsIcon size={32} />
+          </div>
           <h1 className="text-2xl font-bold text-gray-900">
             {wedding.partner1_name}
             {wedding.partner2_name ? ` & ${wedding.partner2_name}` : ''}&apos;s Wedding
@@ -90,7 +93,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-900">
-              Hi {vendor.name}! 👋
+              Hi {vendor.name}!
             </h2>
             <p className="text-gray-600 mt-1">
               {wedding.partner1_name} requested the following:
@@ -102,7 +105,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
             <ul className="space-y-2">
               {requestedItems.map((item, index) => (
                 <li key={index} className="flex items-center gap-3 text-gray-700">
-                  <span className="w-6 h-6 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-sm">
+                  <span className="w-6 h-6 rounded-full bg-[#E8F0E9] text-[#5C7C65] flex items-center justify-center text-sm font-medium">
                     {index + 1}
                   </span>
                   {item}
@@ -113,17 +116,17 @@ export default async function VendorResponsePage({ params }: PageProps) {
 
           {/* Personal Note */}
           {request.personal_note && (
-            <div className="mb-6 bg-gray-50 rounded-lg p-4">
-              <p className="text-sm text-gray-500 mb-1">💬 Note from {wedding.partner1_name}:</p>
+            <div className="mb-6 bg-[#F5E6E0] rounded-lg p-4">
+              <p className="text-sm text-[#96792A] mb-1">Note from {wedding.partner1_name}:</p>
               <p className="text-gray-700 italic">&quot;{request.personal_note}&quot;</p>
             </div>
           )}
 
           {/* Status Badge */}
           {request.status === 'completed' ? (
-            <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <p className="text-green-700 font-medium">✅ You&apos;ve already submitted a response</p>
-              <p className="text-green-600 text-sm mt-1">Thank you!</p>
+            <div className="mb-6 bg-[#E8F0E9] border border-[#87A98F] rounded-lg p-4 text-center">
+              <p className="text-[#5C7C65] font-medium">You&apos;ve already submitted a response</p>
+              <p className="text-[#5C7C65] text-sm mt-1">Thank you!</p>
             </div>
           ) : (
             <VendorResponseForm 
@@ -137,7 +140,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
 
         {/* Footer */}
         <p className="text-center text-gray-400 text-sm mt-8">
-          Powered by WeddingHub • No account needed
+          No account needed
         </p>
       </div>
     </div>
