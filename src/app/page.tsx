@@ -1,10 +1,14 @@
+import { RingsIcon, MailIcon, ClipboardIcon, SparklesIcon } from '@/components/icons'
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white">
       <div className="max-w-4xl mx-auto px-4 py-20">
         {/* Hero */}
         <div className="text-center mb-16">
-          <div className="text-6xl mb-6">💒</div>
+          <div className="w-20 h-20 rounded-full bg-[#87A98F] flex items-center justify-center text-white mx-auto mb-6">
+            <RingsIcon size={40} />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Wedding Vendor Coordinator
           </h1>
@@ -17,21 +21,27 @@ export default function Home() {
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="text-3xl mb-3">📧</div>
+            <div className="w-12 h-12 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mb-4">
+              <MailIcon size={24} />
+            </div>
             <h3 className="font-semibold text-lg mb-2">Send Request Links</h3>
             <p className="text-gray-600 text-sm">
               No vendor accounts needed. Send a link, they upload — done.
             </p>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="text-3xl mb-3">📁</div>
+            <div className="w-12 h-12 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mb-4">
+              <ClipboardIcon size={24} />
+            </div>
             <h3 className="font-semibold text-lg mb-2">Everything in One Place</h3>
             <p className="text-gray-600 text-sm">
               Invoices, contracts, availability — no more scattered emails.
             </p>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="text-3xl mb-3">📦</div>
+            <div className="w-12 h-12 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mb-4">
+              <SparklesIcon size={24} />
+            </div>
             <h3 className="font-semibold text-lg mb-2">Day-Of Coordination</h3>
             <p className="text-gray-600 text-sm">
               Generate a packet with timeline and contacts for all vendors.
@@ -43,7 +53,7 @@ export default function Home() {
         <div className="text-center">
           <a 
             href="/signup"
-            className="inline-block px-8 py-4 bg-pink-500 text-white rounded-xl font-semibold text-lg hover:bg-pink-600 transition-colors shadow-lg shadow-pink-200"
+            className="inline-block px-8 py-4 bg-[#87A98F] text-white rounded-xl font-semibold text-lg hover:bg-[#5C7C65] transition-colors shadow-lg shadow-[#87A98F]/30"
           >
             Get Started — It&apos;s Free
           </a>
@@ -51,7 +61,7 @@ export default function Home() {
             Free for up to 3 vendors. No credit card required.
           </p>
           <p className="text-gray-400 text-sm mt-2">
-            Already have an account? <a href="/login" className="text-pink-500 hover:text-pink-600">Sign in</a>
+            Already have an account? <a href="/login" className="text-[#5C7C65] hover:text-[#87A98F]">Sign in</a>
           </p>
         </div>
       </div>
