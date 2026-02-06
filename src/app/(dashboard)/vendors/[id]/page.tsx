@@ -91,6 +91,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
             vendorId={vendor.id} 
             vendorName={vendor.name}
             vendorEmail={vendor.email}
+            brideName={vendor.wedding.partner1_name}
             hasActiveRequest={hasActiveRequest}
           />
         </div>
@@ -187,6 +188,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
                 vendorId={vendor.id} 
                 vendorName={vendor.name}
                 vendorEmail={vendor.email}
+                brideName={vendor.wedding.partner1_name}
                 hasActiveRequest={false}
                 variant="primary"
               />

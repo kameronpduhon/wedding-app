@@ -3,12 +3,13 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { SparklesIcon } from '@/components/icons'
+import { SparklesIcon, MailIcon } from '@/components/icons'
 
 interface SendRequestButtonProps {
   vendorId: string
   vendorName: string
   vendorEmail: string | null
+  brideName: string
   hasActiveRequest: boolean
   variant?: 'default' | 'primary'
 }
@@ -17,6 +18,7 @@ export function SendRequestButton({
   vendorId, 
   vendorName,
   vendorEmail,
+  brideName,
   hasActiveRequest,
   variant = 'default'
 }: SendRequestButtonProps) {
@@ -29,6 +31,7 @@ export function SendRequestButton({
   const [personalNote, setPersonalNote] = useState('')
   const [generatedLink, setGeneratedLink] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const [copiedEmail, setCopiedEmail] = useState(false)
   
   const router = useRouter()
   const supabase = createClient()
@@ -65,7 +68,46 @@ export function SendRequestButton({
     setGeneratedLink(link)
   }
 
-  const handleCopy = async () => {
+  // Build the list of requested items for the email
+  const getRequestedItems = () => {
+    const items: string[] = []
+    if (requestInvoice) items.push('invoice/quote')
+    if (requestContract) items.push('contract')
+    if (requestAvailability) items.push('availability')
+    if (requestPackageDetails) items.push('package details')
+    return items
+  }
+
+  // Generate email subject
+  const getEmailSubject = () => {
+    const items = getRequestedItems()
+    if (items.length === 0) return `Document request for ${brideName}'s wedding`
+    if (items.length === 1) return `Request for ${items[0]} - ${brideName}'s wedding`
+    return `Document request (${items.join(', ')}) - ${brideName}'s wedding`
+  }
+
+  // Generate email body
+  const getEmailBody = (link: string) => {
+    const items = getRequestedItems()
+    const itemsList = items.map(item => `• ${item.charAt(0).toUpperCase() + item.slice(1)}`).join('\n')
+    
+    return `Hi ${vendorName.split(' ')[0] || 'there'},
+
+I hope you're doing well! I'm working on gathering documents for my upcoming wedding and would love your help.
+
+Could you please send over the following:
+${itemsList}
+
+I've set up an easy upload link for you — no account needed, just click and upload:
+${link}
+
+${personalNote ? `A quick note: ${personalNote}\n\n` : ''}Thank you so much! Let me know if you have any questions.
+
+Best,
+${brideName}`
+  }
+
+  const handleCopyLink = async () => {
     if (generatedLink) {
       await navigator.clipboard.writeText(generatedLink)
       setCopied(true)
@@ -73,10 +115,20 @@ export function SendRequestButton({
     }
   }
 
+  const handleCopyEmail = async () => {
+    if (generatedLink) {
+      const emailText = `Subject: ${getEmailSubject()}\n\n${getEmailBody(generatedLink)}`
+      await navigator.clipboard.writeText(emailText)
+      setCopiedEmail(true)
+      setTimeout(() => setCopiedEmail(false), 2000)
+    }
+  }
+
   const handleClose = () => {
     setIsOpen(false)
     setGeneratedLink(null)
     setCopied(false)
+    setCopiedEmail(false)
     setPersonalNote('')
     router.refresh()
   }
@@ -99,37 +151,60 @@ export function SendRequestButton({
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             {generatedLink ? (
-              // Success state - show link
+              // Success state - show link and email options
               <div className="p-6">
                 <div className="text-center mb-6">
                   <div className="w-16 h-16 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mx-auto mb-3">
                     <SparklesIcon size={28} />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900">Request Created!</h3>
-                  <p className="text-gray-600 mt-1">Share this link with {vendorName}</p>
+                  <p className="text-gray-600 mt-1">Share this with {vendorName}</p>
                 </div>
 
+                {/* Link Section */}
                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <p className="text-xs text-gray-500 mb-2">Request Link:</p>
+                  <p className="text-xs text-gray-500 mb-2">Upload Link:</p>
                   <p className="text-sm text-gray-700 break-all font-mono">{generatedLink}</p>
                 </div>
 
                 <div className="space-y-3">
+                  {/* Copy Link */}
                   <button
-                    onClick={handleCopy}
+                    onClick={handleCopyLink}
                     className="w-full py-3 bg-[#87A98F] text-white rounded-lg font-medium hover:bg-[#5C7C65] transition-colors"
                   >
-                    {copied ? '✓ Copied!' : 'Copy Link'}
+                    {copied ? '✓ Link Copied!' : 'Copy Link'}
                   </button>
 
+                  {/* Open in Email App */}
                   {vendorEmail && (
                     <a
-                      href={`mailto:${vendorEmail}?subject=Request from Wedding&body=Hi!%0A%0APlease use this link to submit your information:%0A%0A${encodeURIComponent(generatedLink)}%0A%0AThank you!`}
-                      className="block w-full py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors text-center"
+                      href={`mailto:${vendorEmail}?subject=${encodeURIComponent(getEmailSubject())}&body=${encodeURIComponent(getEmailBody(generatedLink))}`}
+                      className="flex items-center justify-center gap-2 w-full py-3 border border-[#87A98F] text-[#5C7C65] rounded-lg font-medium hover:bg-[#E8F0E9] transition-colors"
                     >
-                      Open in Email
+                      <MailIcon size={18} />
+                      Open in Email App
                     </a>
                   )}
+
+                  {/* Copy Full Email */}
+                  <button
+                    onClick={handleCopyEmail}
+                    className="w-full py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  >
+                    {copiedEmail ? '✓ Email Copied!' : 'Copy Email Template'}
+                  </button>
+
+                  {/* Preview of email */}
+                  <details className="text-sm">
+                    <summary className="text-gray-500 cursor-pointer hover:text-gray-700">
+                      Preview email template
+                    </summary>
+                    <div className="mt-3 bg-gray-50 rounded-lg p-4 text-gray-600 whitespace-pre-wrap text-xs">
+                      <p className="font-semibold text-gray-700 mb-2">Subject: {getEmailSubject()}</p>
+                      {getEmailBody(generatedLink)}
+                    </div>
+                  </details>
 
                   <button
                     onClick={handleClose}
@@ -203,6 +278,7 @@ export function SendRequestButton({
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors text-sm"
                       placeholder="Hey! Just following up on our conversation..."
                     />
+                    <p className="text-xs text-gray-500 mt-1">This will be included in the email template</p>
                   </div>
                 </div>
 
