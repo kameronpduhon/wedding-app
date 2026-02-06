@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding App — Color Palettes</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .palettes {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .palette {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    .palette-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .palette-header h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .palette-vibe {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .colors {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .color {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .color-info {
+      text-align: center;
+    }
+
+    .color-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .color-hex {
+      font-size: 11px;
+      color: #888;
+      font-family: monospace;
+    }
+
+    .preview {
+      margin-top: 24px;
+      padding: 24px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .preview-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.6;
+    }
+
+    .preview h3 {
+      font-size: 24px;
+    }
+
+    .preview p {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .preview-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .recommendation {
+      background: linear-gradient(135deg, #87A98F 0%, #5C7C65 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .recommendation h3 {
+      margin-bottom: 8px;
+    }
+
+    .recommendation p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💒 Wedding App Color Palettes</h1>
+  <p class="subtitle">Click through to see how each palette might feel. Show CC and see which one she vibes with!</p>
+
+  <div class="palettes">
+    <!-- Option 1: Soft Romance -->
+    <div class="palette">
+      <div class="palette-header">
+        <span style="font-size: 24px;">🌸</span>
+        <h2>Option 1: Soft Romance</h2>
+      </div>
+      <p class="palette-vibe">Romantic, feminine, traditional. Appeals to classic/romantic wedding styles.</p>
+      <div class="colors">
+        <div class="color">
+          <div class="swatch" style="background: #D4A5A5;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#D4A5A5</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #F5E6E0;"></div>
+          <div class="color-info">
+            <div class="color-name">Secondary</div>
+            <div class="color-hex">#F5E6E0</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #B76E79;"></div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-hex">#B76E79</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #FFFAF8; border: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#FFFAF8</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #3D3D3D;"></div>
+          <div class="color-info">
+            <div class="color-name">Text</div>
+            <div class="color-hex">#3D3D3D</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #9C9C9C;"></div>
+          <div class="color-info">
+            <div class="color-name">Muted</div>
+            <div class="color-hex">#9C9C9C</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview" style="background: #FFFAF8; color: #3D3D3D;">
+        <div class="preview-title" style="color: #9C9C9C;">Preview</div>
+        <h3>Vendor Dashboard</h3>
+        <p style="color: #9C9C9C;">Manage your wedding vendors in one place</p>
+        <button class="preview-btn" style="background: #D4A5A5; color: white;">Send Request</button>
+      </div>
+    </div>
+
+    <!-- Option 2: Modern Garden -->
+    <div class="palette">
+      <div class="palette-header">
+        <span style="font-size: 24px;">🌿</span>
+        <h2>Option 2: Modern Garden</h2>
+      </div>
+      <p class="palette-vibe">Fresh, organic, modern. Great for garden/outdoor/boho wedding styles.</p>
+      <div class="colors">
+        <div class="color">
+          <div class="swatch" style="background: #87A98F;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#87A98F</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #F8F6F0;"></div>
+          <div class="color-info">
+            <div class="color-name">Secondary</div>
+            <div class="color-hex">#F8F6F0</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #5C7C65;"></div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-hex">#5C7C65</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #FDFDFB; border: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#FDFDFB</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #2C3E2D;"></div>
+          <div class="color-info">
+            <div class="color-name">Text</div>
+            <div class="color-hex">#2C3E2D</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #A3A99E;"></div>
+          <div class="color-info">
+            <div class="color-name">Muted</div>
+            <div class="color-hex">#A3A99E</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview" style="background: #FDFDFB; color: #2C3E2D;">
+        <div class="preview-title" style="color: #A3A99E;">Preview</div>
+        <h3>Vendor Dashboard</h3>
+        <p style="color: #A3A99E;">Manage your wedding vendors in one place</p>
+        <button class="preview-btn" style="background: #87A98F; color: white;">Send Request</button>
+      </div>
+    </div>
+
+    <!-- Option 3: Elegant Luxe -->
+    <div class="palette">
+      <div class="palette-header">
+        <span style="font-size: 24px;">✨</span>
+        <h2>Option 3: Elegant Luxe</h2>
+      </div>
+      <p class="palette-vibe">Luxurious, timeless, sophisticated. Appeals to upscale/classic weddings.</p>
+      <div class="colors">
+        <div class="color">
+          <div class="swatch" style="background: #D4C5B5;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#D4C5B5</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #FAF8F5;"></div>
+          <div class="color-info">
+            <div class="color-name">Secondary</div>
+            <div class="color-hex">#FAF8F5</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #C9A962;"></div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-hex">#C9A962</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #FEFEFE; border: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#FEFEFE</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #3A3226;"></div>
+          <div class="color-info">
+            <div class="color-name">Text</div>
+            <div class="color-hex">#3A3226</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #A89F94;"></div>
+          <div class="color-info">
+            <div class="color-name">Muted</div>
+            <div class="color-hex">#A89F94</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview" style="background: #FEFEFE; color: #3A3226;">
+        <div class="preview-title" style="color: #A89F94;">Preview</div>
+        <h3>Vendor Dashboard</h3>
+        <p style="color: #A89F94;">Manage your wedding vendors in one place</p>
+        <button class="preview-btn" style="background: #C9A962; color: white;">Send Request</button>
+      </div>
+    </div>
+
+    <!-- Option 4: Serene & Airy -->
+    <div class="palette">
+      <div class="palette-header">
+        <span style="font-size: 24px;">🌊</span>
+        <h2>Option 4: Serene & Airy</h2>
+      </div>
+      <p class="palette-vibe">Calm, trustworthy, serene. Works for coastal/elegant/winter weddings.</p>
+      <div class="colors">
+        <div class="color">
+          <div class="swatch" style="background: #9AB4C8;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#9AB4C8</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #EDF3F7;"></div>
+          <div class="color-info">
+            <div class="color-name">Secondary</div>
+            <div class="color-hex">#EDF3F7</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #6B8BA4;"></div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-hex">#6B8BA4</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #FCFDFD; border: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#FCFDFD</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #3A4A5C;"></div>
+          <div class="color-info">
+            <div class="color-name">Text</div>
+            <div class="color-hex">#3A4A5C</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #94A3B0;"></div>
+          <div class="color-info">
+            <div class="color-name">Muted</div>
+            <div class="color-hex">#94A3B0</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview" style="background: #FCFDFD; color: #3A4A5C;">
+        <div class="preview-title" style="color: #94A3B0;">Preview</div>
+        <h3>Vendor Dashboard</h3>
+        <p style="color: #94A3B0;">Manage your wedding vendors in one place</p>
+        <button class="preview-btn" style="background: #9AB4C8; color: white;">Send Request</button>
+      </div>
+    </div>
+
+    <!-- Option 5: Lavender Dreams -->
+    <div class="palette">
+      <div class="palette-header">
+        <span style="font-size: 24px;">💜</span>
+        <h2>Option 5: Lavender Dreams</h2>
+      </div>
+      <p class="palette-vibe">Dreamy, romantic, unique. Stands out from typical wedding apps.</p>
+      <div class="colors">
+        <div class="color">
+          <div class="swatch" style="background: #B8A9C9;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#B8A9C9</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #F3EFF6;"></div>
+          <div class="color-info">
+            <div class="color-name">Secondary</div>
+            <div class="color-hex">#F3EFF6</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #8B7BA8;"></div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-hex">#8B7BA8</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #FDFCFE; border: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#FDFCFE</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #4A4453;"></div>
+          <div class="color-info">
+            <div class="color-name">Text</div>
+            <div class="color-hex">#4A4453</div>
+          </div>
+        </div>
+        <div class="color">
+          <div class="swatch" style="background: #A09BA8;"></div>
+          <div class="color-info">
+            <div class="color-name">Muted</div>
+            <div class="color-hex">#A09BA8</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview" style="background: #FDFCFE; color: #4A4453;">
+        <div class="preview-title" style="color: #A09BA8;">Preview</div>
+        <h3>Vendor Dashboard</h3>
+        <p style="color: #A09BA8;">Manage your wedding vendors in one place</p>
+        <button class="preview-btn" style="background: #B8A9C9; color: white;">Send Request</button>
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <h3>🦈 Drew's Picks</h3>
+      <p><strong>Modern Garden</strong> or <strong>Elegant Luxe</strong> — both feel professional and calming for a coordination app. But CC's opinion is what matters!</p>
+    </div>
+  </div>
+</body>
+</html>
