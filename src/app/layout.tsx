@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Wedding Vendor Coordinator",
+  title: "Wed & Gather — Wedding Vendor Coordination",
   description: "The easiest way to manage your wedding vendors. Collect invoices, contracts, and coordinate everything in one place.",
 };
 

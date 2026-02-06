@@ -10,8 +10,9 @@ export default function Home() {
             <RingsIcon size={40} />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Wedding Vendor Coordinator
+            Wed & Gather
           </h1>
+          <p className="text-lg text-[#5C7C65] font-medium mb-2">Wedding Vendor Coordination</p>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             The easiest way to manage your wedding vendors. 
             Collect invoices, contracts, and coordinate everything in one place.
