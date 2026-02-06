@@ -53,9 +53,15 @@ export default async function DashboardPage() {
   const completedResponses = vendors?.reduce((acc, v) => 
     acc + (v.requests?.filter((r: { status: string }) => r.status === 'completed').length || 0), 0) || 0
 
-  // Days until wedding
+  // Days until wedding - parse as local date (not UTC)
   const daysUntil = wedding.wedding_date 
-    ? Math.ceil((new Date(wedding.wedding_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+    ? (() => {
+        const [year, month, day] = wedding.wedding_date.split('-').map(Number)
+        const weddingDate = new Date(year, month - 1, day) // Local midnight
+        const today = new Date()
+        today.setHours(0, 0, 0, 0) // Reset to local midnight
+        return Math.ceil((weddingDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+      })()
     : null
 
   return (
@@ -74,11 +80,14 @@ export default async function DashboardPage() {
               </h1>
               {wedding.wedding_date && (
                 <p className="text-sm text-gray-500">
-                  {new Date(wedding.wedding_date).toLocaleDateString('en-US', { 
-                    month: 'long', 
-                    day: 'numeric', 
-                    year: 'numeric' 
-                  })}
+                  {(() => {
+                    const [year, month, day] = wedding.wedding_date.split('-').map(Number)
+                    return new Date(year, month - 1, day).toLocaleDateString('en-US', { 
+                      month: 'long', 
+                      day: 'numeric', 
+                      year: 'numeric' 
+                    })
+                  })()}
                 </p>
               )}
             </div>

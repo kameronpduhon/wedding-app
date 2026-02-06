@@ -54,14 +54,17 @@ export default async function VendorResponsePage({ params }: PageProps) {
       .eq('id', request.id)
   }
 
-  // Format wedding date
+  // Format wedding date - parse as local date (not UTC)
   const weddingDate = wedding.wedding_date 
-    ? new Date(wedding.wedding_date).toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
+    ? (() => {
+        const [year, month, day] = wedding.wedding_date.split('-').map(Number)
+        return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      })()
     : null
 
   // Build list of requested items
