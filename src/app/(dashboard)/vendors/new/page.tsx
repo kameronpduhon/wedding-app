@@ -35,6 +35,8 @@ const CATEGORIES = [
   { value: 'venue', label: 'Venue', icon: MapPinIcon },
   { value: 'planner', label: 'Wedding Planner', icon: ClipboardIcon },
   { value: 'officiant', label: 'Officiant', icon: HeartIcon },
+  { value: 'hair_stylist', label: 'Hair Stylist', icon: ScissorsIcon },
+  { value: 'makeup_artist', label: 'Makeup Artist', icon: SparklesIcon },
   { value: 'hair_makeup', label: 'Hair & Makeup', icon: ScissorsIcon },
   { value: 'dress', label: 'Dress/Attire', icon: ShirtIcon },
   { value: 'suit', label: 'Suit/Tux', icon: ShirtIcon },

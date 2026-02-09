@@ -268,6 +268,8 @@ export function getCategoryIcon(category: string, props?: IconProps) {
     venue: <MapPinIcon {...props} />,
     planner: <ClipboardIcon {...props} />,
     officiant: <HeartIcon {...props} />,
+    hair_stylist: <ScissorsIcon {...props} />,
+    makeup_artist: <SparklesIcon {...props} />,
     hair_makeup: <ScissorsIcon {...props} />,
     dress: <ShirtIcon {...props} />,
     suit: <ShirtIcon {...props} />,
