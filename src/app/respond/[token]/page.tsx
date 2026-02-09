@@ -143,7 +143,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
 
         {/* Footer */}
         <p className="text-center text-gray-400 text-sm mt-8">
-          Powered by Wed & Gather
+          Powered by Wedding Vendor HQ
         </p>
       </div>
     </div>
