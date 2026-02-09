@@ -90,6 +90,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
           <SendRequestButton 
             vendorId={vendor.id} 
             vendorName={vendor.name}
+            vendorContactName={vendor.contact_name}
             vendorEmail={vendor.email}
             brideName={vendor.wedding.partner1_name}
             hasActiveRequest={hasActiveRequest}
@@ -187,6 +188,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
               <SendRequestButton 
                 vendorId={vendor.id} 
                 vendorName={vendor.name}
+                vendorContactName={vendor.contact_name}
                 vendorEmail={vendor.email}
                 brideName={vendor.wedding.partner1_name}
                 hasActiveRequest={false}

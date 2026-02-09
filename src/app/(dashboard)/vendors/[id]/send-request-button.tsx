@@ -8,6 +8,7 @@ import { SparklesIcon, MailIcon } from '@/components/icons'
 interface SendRequestButtonProps {
   vendorId: string
   vendorName: string
+  vendorContactName: string | null
   vendorEmail: string | null
   brideName: string
   hasActiveRequest: boolean
@@ -17,6 +18,7 @@ interface SendRequestButtonProps {
 export function SendRequestButton({ 
   vendorId, 
   vendorName,
+  vendorContactName,
   vendorEmail,
   brideName,
   hasActiveRequest,
@@ -92,7 +94,9 @@ export function SendRequestButton({
     const items = getRequestedItems()
     const itemsList = items.map(item => `• ${item.charAt(0).toUpperCase() + item.slice(1)}`).join('\n')
     
-    return `Hi ${vendorName.split(' ')[0] || 'there'},
+    // Use contact name if available, otherwise full business name
+    const greeting = vendorContactName || vendorName
+    return `Hi ${greeting},
 
 I hope you're doing well! I'm working on gathering documents for my upcoming wedding and would love your help.
 
