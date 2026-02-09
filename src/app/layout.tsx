@@ -8,8 +8,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Wed & Gather — Wedding Vendor Coordination",
+  title: "Wedding Vendor HQ — Plan Your Dream Team",
   description: "The easiest way to manage your wedding vendors. Collect invoices, contracts, and coordinate everything in one place.",
+  icons: {
+    icon: "/logo-icon.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
