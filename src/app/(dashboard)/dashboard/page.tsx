@@ -151,7 +151,11 @@ export default async function DashboardPage() {
                 const status = latestRequest?.status || 'none'
                 
                 return (
-                  <div key={vendor.id} className="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                  <Link 
+                    key={vendor.id} 
+                    href={`/vendors/${vendor.id}`}
+                    className="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
+                  >
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65]">
                         {getCategoryIcon(vendor.category, { size: 20 })}
@@ -166,15 +170,12 @@ export default async function DashboardPage() {
                     </div>
                     <div className="flex items-center gap-3">
                       <StatusBadge status={status} />
-                      <Link
-                        href={`/vendors/${vendor.id}`}
-                        className="flex items-center gap-1 px-3 py-1.5 text-sm text-[#5C7C65] hover:bg-[#E8F0E9] rounded-lg transition-colors"
-                      >
+                      <span className="flex items-center gap-1 px-3 py-1.5 text-sm text-[#5C7C65]">
                         View
                         <ArrowRightIcon size={14} />
-                      </Link>
+                      </span>
                     </div>
-                  </div>
+                  </Link>
                 )
               })}
             </div>
