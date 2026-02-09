@@ -31,7 +31,8 @@ export function SendRequestButton({
   const [personalNote, setPersonalNote] = useState('')
   const [generatedLink, setGeneratedLink] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
-  const [copiedEmail, setCopiedEmail] = useState(false)
+  const [copiedSubject, setCopiedSubject] = useState(false)
+  const [copiedBody, setCopiedBody] = useState(false)
   
   const router = useRouter()
   const supabase = createClient()
@@ -115,12 +116,17 @@ ${brideName}`
     }
   }
 
-  const handleCopyEmail = async () => {
+  const handleCopySubject = async () => {
+    await navigator.clipboard.writeText(getEmailSubject())
+    setCopiedSubject(true)
+    setTimeout(() => setCopiedSubject(false), 2000)
+  }
+
+  const handleCopyBody = async () => {
     if (generatedLink) {
-      const emailText = `Subject: ${getEmailSubject()}\n\n${getEmailBody(generatedLink)}`
-      await navigator.clipboard.writeText(emailText)
-      setCopiedEmail(true)
-      setTimeout(() => setCopiedEmail(false), 2000)
+      await navigator.clipboard.writeText(getEmailBody(generatedLink))
+      setCopiedBody(true)
+      setTimeout(() => setCopiedBody(false), 2000)
     }
   }
 
@@ -128,7 +134,8 @@ ${brideName}`
     setIsOpen(false)
     setGeneratedLink(null)
     setCopied(false)
-    setCopiedEmail(false)
+    setCopiedSubject(false)
+    setCopiedBody(false)
     setPersonalNote('')
     router.refresh()
   }
@@ -187,13 +194,21 @@ ${brideName}`
                     </a>
                   )}
 
-                  {/* Copy Full Email */}
-                  <button
-                    onClick={handleCopyEmail}
-                    className="w-full py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-                  >
-                    {copiedEmail ? '✓ Email Copied!' : 'Copy Email Template'}
-                  </button>
+                  {/* Copy Subject & Body separately */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleCopySubject}
+                      className="flex-1 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors text-sm"
+                    >
+                      {copiedSubject ? '✓ Copied!' : 'Copy Subject'}
+                    </button>
+                    <button
+                      onClick={handleCopyBody}
+                      className="flex-1 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors text-sm"
+                    >
+                      {copiedBody ? '✓ Copied!' : 'Copy Body'}
+                    </button>
+                  </div>
 
                   {/* Preview of email */}
                   <details className="text-sm">
