@@ -285,6 +285,18 @@ export function TrashIcon({ className = '', size = 24 }: IconProps) {
   )
 }
 
+export function MakeupBrushIcon({ className = '', size = 24 }: IconProps) {
+  return (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9.5 2 6 9l3 2.5"/>
+      <path d="M14.5 2 18 9l-3 2.5"/>
+      <path d="M6 9h12"/>
+      <path d="M8 9c0 0-2 2-2 5s2 6 6 6 6-3 6-6-2-5-2-5"/>
+      <path d="M12 14v4"/>
+    </svg>
+  )
+}
+
 // Category icon mapper
 export function getCategoryIcon(category: string, props?: IconProps) {
   const icons: Record<string, React.ReactNode> = {
@@ -299,7 +311,7 @@ export function getCategoryIcon(category: string, props?: IconProps) {
     planner: <ClipboardIcon {...props} />,
     officiant: <HeartIcon {...props} />,
     hair_stylist: <ScissorsIcon {...props} />,
-    makeup_artist: <SparklesIcon {...props} />,
+    makeup_artist: <MakeupBrushIcon {...props} />,
     hair_makeup: <PersonIcon {...props} />,
     dress: <ShirtIcon {...props} />,
     suit: <ShirtIcon {...props} />,
