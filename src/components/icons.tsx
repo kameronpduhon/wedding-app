@@ -203,6 +203,15 @@ export function UsersIcon({ className = '', size = 24 }: IconProps) {
   )
 }
 
+export function PersonIcon({ className = '', size = 24 }: IconProps) {
+  return (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="7" r="4"/>
+      <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/>
+    </svg>
+  )
+}
+
 export function RingsIcon({ className = '', size = 24 }: IconProps) {
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -270,7 +279,7 @@ export function getCategoryIcon(category: string, props?: IconProps) {
     officiant: <HeartIcon {...props} />,
     hair_stylist: <ScissorsIcon {...props} />,
     makeup_artist: <SparklesIcon {...props} />,
-    hair_makeup: <ScissorsIcon {...props} />,
+    hair_makeup: <PersonIcon {...props} />,
     dress: <ShirtIcon {...props} />,
     suit: <ShirtIcon {...props} />,
     transportation: <CarIcon {...props} />,

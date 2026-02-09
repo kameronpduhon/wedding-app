@@ -21,7 +21,8 @@ import {
   CarIcon,
   ArmchairIcon,
   MailIcon,
-  SparklesIcon
+  SparklesIcon,
+  PersonIcon
 } from '@/components/icons'
 
 const CATEGORIES = [
@@ -37,7 +38,7 @@ const CATEGORIES = [
   { value: 'officiant', label: 'Officiant', icon: HeartIcon },
   { value: 'hair_stylist', label: 'Hair Stylist', icon: ScissorsIcon },
   { value: 'makeup_artist', label: 'Makeup Artist', icon: SparklesIcon },
-  { value: 'hair_makeup', label: 'Hair & Makeup', icon: ScissorsIcon },
+  { value: 'hair_makeup', label: 'Hair & Makeup (same vendor)', icon: PersonIcon },
   { value: 'dress', label: 'Dress/Attire', icon: ShirtIcon },
   { value: 'suit', label: 'Suit/Tux', icon: ShirtIcon },
   { value: 'transportation', label: 'Transportation', icon: CarIcon },
