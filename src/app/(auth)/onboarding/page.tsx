@@ -7,7 +7,8 @@ import { ArrowRightIcon } from '@/components/icons'
 import { LogoIcon } from '@/components/logo'
 
 export default function OnboardingPage() {
-  const [partner1Name, setPartner1Name] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [partner2Name, setPartner2Name] = useState('')
   const [weddingDate, setWeddingDate] = useState('')
   const [venueName, setVenueName] = useState('')
@@ -17,12 +18,14 @@ export default function OnboardingPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Pre-fill partner1 name from user profile
+  // Pre-fill name from user profile
   useEffect(() => {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (user?.user_metadata?.full_name) {
-        setPartner1Name(user.user_metadata.full_name)
+        const nameParts = user.user_metadata.full_name.split(' ')
+        setFirstName(nameParts[0] || '')
+        setLastName(nameParts.slice(1).join(' ') || '')
       }
     }
     getUser()
@@ -45,7 +48,7 @@ export default function OnboardingPage() {
       .from('weddings')
       .insert({
         user_id: user.id,
-        partner1_name: partner1Name,
+        partner1_name: `${firstName} ${lastName}`.trim(),
         partner2_name: partner2Name || null,
         wedding_date: weddingDate || null,
         venue_name: venueName || null,
@@ -76,33 +79,48 @@ export default function OnboardingPage() {
         {/* Form */}
         <div className="bg-white rounded-xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Partner Names */}
+            {/* Your Name */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Name *
+                  First Name *
                 </label>
                 <input
                   type="text"
-                  value={partner1Name}
-                  onChange={(e) => setPartner1Name(e.target.value)}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
-                  placeholder="Your name"
+                  placeholder="First name"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Partner&apos;s Name
+                  Last Name *
                 </label>
                 <input
                   type="text"
-                  value={partner2Name}
-                  onChange={(e) => setPartner2Name(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
-                  placeholder="Partner's name"
+                  placeholder="Last name"
                 />
               </div>
+            </div>
+
+            {/* Partner's Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Partner&apos;s Name
+              </label>
+              <input
+                type="text"
+                value={partner2Name}
+                onChange={(e) => setPartner2Name(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
+                placeholder="Partner's name (optional)"
+              />
             </div>
 
             {/* Wedding Date */}
