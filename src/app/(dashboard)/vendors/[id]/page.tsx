@@ -3,7 +3,8 @@ import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { SendRequestButton } from './send-request-button'
 import { RequestCard } from './request-card'
-import { ArrowLeftIcon, MailIcon } from '@/components/icons'
+import { DeleteVendorButton } from './delete-vendor-button'
+import { ArrowLeftIcon, MailIcon, PencilIcon } from '@/components/icons'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -87,14 +88,27 @@ export default async function VendorDetailPage({ params }: PageProps) {
               <p className="text-sm text-gray-500 capitalize">{vendor.category.replace('_', ' ')}</p>
             </div>
           </div>
-          <SendRequestButton 
-            vendorId={vendor.id} 
-            vendorName={vendor.name}
-            vendorContactName={vendor.contact_name}
-            vendorEmail={vendor.email}
-            brideName={vendor.wedding.partner1_name}
-            hasActiveRequest={hasActiveRequest}
-          />
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/vendors/${vendor.id}/edit`}
+              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm"
+            >
+              <PencilIcon size={16} />
+              Edit
+            </Link>
+            <DeleteVendorButton 
+              vendorId={vendor.id} 
+              vendorName={vendor.name}
+            />
+            <SendRequestButton 
+              vendorId={vendor.id} 
+              vendorName={vendor.name}
+              vendorContactName={vendor.contact_name}
+              vendorEmail={vendor.email}
+              brideName={vendor.wedding.partner1_name}
+              hasActiveRequest={hasActiveRequest}
+            />
+          </div>
         </div>
       </header>
 
