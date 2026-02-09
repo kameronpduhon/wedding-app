@@ -2,8 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LogoutButton } from './logout-button'
-import { getCategoryIcon, PlusIcon, SunIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
+import { getCategoryIcon, PlusIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
 import { LogoIcon } from '@/components/logo'
+import { Greeting } from './greeting'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -100,10 +101,7 @@ export default async function DashboardPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                Good {getTimeOfDay()}, {wedding.partner1_name}!
-                <SunIcon className="text-[#C9A962]" size={24} />
-              </h2>
+              <Greeting name={wedding.partner1_name} />
               {daysUntil && daysUntil > 0 && (
                 <p className="text-gray-600">{daysUntil} days until the big day</p>
               )}
@@ -199,13 +197,6 @@ export default async function DashboardPage() {
       </main>
     </div>
   )
-}
-
-function getTimeOfDay() {
-  const hour = new Date().getHours()
-  if (hour < 12) return 'morning'
-  if (hour < 17) return 'afternoon'
-  return 'evening'
 }
 
 function StatusBadge({ status }: { status: string }) {
