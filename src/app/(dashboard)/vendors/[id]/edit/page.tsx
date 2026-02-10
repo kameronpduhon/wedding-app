@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import { Footer } from '@/components/footer'
 import { 
   ArrowLeftIcon, 
   CameraIcon, 
@@ -151,27 +152,33 @@ export default function EditVendorPage() {
 
   if (isFetching) {
     return (
-      <div className="min-h-screen bg-[#FDFDFB] flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+      <div className="min-h-screen bg-[#FDFDFB] flex flex-col">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-gray-500">Loading...</div>
+        </div>
+        <Footer />
       </div>
     )
   }
 
   if (error && (error === 'Vendor not found' || error === 'Unauthorized')) {
     return (
-      <div className="min-h-screen bg-[#FDFDFB] flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-500 mb-4">{error}</p>
-          <Link href="/dashboard" className="text-[#5C7C65] hover:text-[#87A98F]">
-            Back to Dashboard
-          </Link>
+      <div className="min-h-screen bg-[#FDFDFB] flex flex-col">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-gray-500 mb-4">{error}</p>
+            <Link href="/dashboard" className="text-[#5C7C65] hover:text-[#87A98F]">
+              Back to Dashboard
+            </Link>
+          </div>
         </div>
+        <Footer />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFDFB]">
+    <div className="min-h-screen bg-[#FDFDFB] flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
@@ -183,7 +190,7 @@ export default function EditVendorPage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 py-8">
+      <main className="max-w-2xl mx-auto px-4 py-8 flex-1">
         <div className="bg-white rounded-xl shadow-sm p-6">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Vendor Name */}
@@ -311,6 +318,8 @@ export default function EditVendorPage() {
           </form>
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }

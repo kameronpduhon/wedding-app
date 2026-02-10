@@ -6,6 +6,7 @@ import { PlusIcon, UsersIcon } from '@/components/icons'
 import { SortableVendorList } from './sortable-vendor-list'
 import { LogoIcon } from '@/components/logo'
 import { Greeting } from './greeting'
+import { Footer } from '@/components/footer'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -68,7 +69,7 @@ export default async function DashboardPage() {
     : null
 
   return (
-    <div className="min-h-screen bg-[#FDFDFB]">
+    <div className="min-h-screen bg-[#FDFDFB] flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -97,7 +98,7 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-4 py-8 flex-1">
         {/* Welcome + Stats */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
@@ -164,6 +165,8 @@ export default async function DashboardPage() {
           )}
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }

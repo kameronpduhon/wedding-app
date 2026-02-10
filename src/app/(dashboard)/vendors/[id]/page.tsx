@@ -7,6 +7,7 @@ import { DeleteVendorButton } from './delete-vendor-button'
 import { ArrowLeftIcon, MailIcon, PencilIcon, getCategoryLabel } from '@/components/icons'
 import { DocumentUpload } from './document-upload'
 import { DocumentList } from './document-list'
+import { Footer } from '@/components/footer'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -83,7 +84,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
     .order('uploaded_at', { ascending: false })
 
   return (
-    <div className="min-h-screen bg-[#FDFDFB]">
+    <div className="min-h-screen bg-[#FDFDFB] flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -121,7 +122,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+      <main className="max-w-4xl mx-auto px-4 py-8 space-y-6 flex-1">
         {/* Vendor Info */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="font-semibold text-gray-900 mb-4">Contact Information</h2>
@@ -230,6 +231,8 @@ export default async function VendorDetailPage({ params }: PageProps) {
           )}
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }

@@ -1,9 +1,10 @@
 import { MailIcon, ClipboardIcon, SparklesIcon } from '@/components/icons'
 import { LogoIcon } from '@/components/logo'
+import { Footer } from '@/components/footer'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white flex flex-col">
       <div className="max-w-4xl mx-auto px-4 py-20">
         {/* Hero */}
         <div className="text-center mb-16">
@@ -40,7 +41,10 @@ export default function Home() {
               Invoices, contracts, availability — no more scattered emails.
             </p>
           </div>
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-white rounded-xl p-6 shadow-sm relative">
+            <span className="absolute top-4 right-4 px-2 py-0.5 bg-[#FDF6E3] text-[#96792A] text-xs font-medium rounded-full">
+              Coming Soon
+            </span>
             <div className="w-12 h-12 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mb-4">
               <SparklesIcon size={24} />
             </div>
@@ -67,6 +71,8 @@ export default function Home() {
           </p>
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }

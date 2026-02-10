@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { Footer } from '@/components/footer'
 import { 
   ArrowLeftIcon, 
   CameraIcon, 
@@ -126,7 +127,7 @@ export default function NewVendorPage() {
   const IconComponent = selectedCategory?.icon || SparklesIcon
 
   return (
-    <div className="min-h-screen bg-[#FDFDFB]">
+    <div className="min-h-screen bg-[#FDFDFB] flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
@@ -138,7 +139,7 @@ export default function NewVendorPage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 py-8">
+      <main className="max-w-2xl mx-auto px-4 py-8 flex-1">
         <div className="bg-white rounded-xl shadow-sm p-6">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Vendor Name */}
@@ -266,6 +267,8 @@ export default function NewVendorPage() {
           </form>
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }
