@@ -35,7 +35,7 @@ const CATEGORIES = [
   { value: 'band', label: 'Band', icon: GuitarIcon },
   { value: 'cake', label: 'Cake/Bakery', icon: CakeIcon },
   { value: 'venue', label: 'Venue', icon: MapPinIcon },
-  { value: 'planner', label: 'Wedding Planner', icon: ClipboardIcon },
+  { value: 'planner', label: 'Wedding Planner/Coordinator', icon: ClipboardIcon },
   { value: 'officiant', label: 'Officiant', icon: HeartIcon },
   { value: 'hair_stylist', label: 'Hair Stylist', icon: ScissorsIcon },
   { value: 'makeup_artist', label: 'Makeup Artist', icon: LipstickIcon },
