@@ -5,6 +5,8 @@ import { SendRequestButton } from './send-request-button'
 import { RequestCard } from './request-card'
 import { DeleteVendorButton } from './delete-vendor-button'
 import { ArrowLeftIcon, MailIcon, PencilIcon, getCategoryLabel } from '@/components/icons'
+import { DocumentUpload } from './document-upload'
+import { DocumentList } from './document-list'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -72,6 +74,13 @@ export default async function VendorDetailPage({ params }: PageProps) {
 
   const latestRequest = vendor.requests?.[0]
   const hasActiveRequest = latestRequest && latestRequest.status !== 'completed'
+
+  // Get vendor documents
+  const { data: documents } = await supabase
+    .from('vendor_documents')
+    .select('*')
+    .eq('vendor_id', id)
+    .order('uploaded_at', { ascending: false })
 
   return (
     <div className="min-h-screen bg-[#FDFDFB]">
@@ -152,6 +161,15 @@ export default async function VendorDetailPage({ params }: PageProps) {
               <p className="text-gray-700">{vendor.notes}</p>
             </div>
           )}
+        </div>
+
+        {/* Documents */}
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold text-gray-900">Documents</h2>
+            <DocumentUpload vendorId={vendor.id} />
+          </div>
+          <DocumentList documents={documents || []} vendorId={vendor.id} />
         </div>
 
         {/* Requests & Responses */}
