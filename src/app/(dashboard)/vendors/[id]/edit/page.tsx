@@ -23,7 +23,8 @@ import {
   MailIcon,
   SparklesIcon,
   PersonIcon,
-  } from '@/components/icons'
+  PhotoBoothIcon,
+} from '@/components/icons'
 
 const CATEGORIES = [
   { value: 'photographer', label: 'Photographer', icon: CameraIcon },
@@ -44,6 +45,7 @@ const CATEGORIES = [
   { value: 'transportation', label: 'Transportation', icon: CarIcon },
   { value: 'rentals', label: 'Rentals', icon: ArmchairIcon },
   { value: 'invitations', label: 'Invitations', icon: MailIcon },
+  { value: 'photo_booth', label: 'Photo Booth', icon: PhotoBoothIcon },
   { value: 'other', label: 'Other', icon: SparklesIcon },
 ]
 

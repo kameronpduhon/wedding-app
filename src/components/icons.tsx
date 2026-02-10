@@ -285,14 +285,12 @@ export function TrashIcon({ className = '', size = 24 }: IconProps) {
   )
 }
 
-export function CompactMirrorIcon({ className = '', size = 24 }: IconProps) {
+export function PhotoBoothIcon({ className = '', size = 24 }: IconProps) {
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="9"/>
-      <circle cx="12" cy="12" r="5"/>
-      <path d="M12 7v0"/>
-      <path d="M15 9l0 0"/>
-      <path d="M9 9l0 0"/>
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <rect x="6" y="6" width="12" height="10" rx="1"/>
+      <path d="M6 20h12"/>
     </svg>
   )
 }
@@ -318,6 +316,7 @@ export function getCategoryLabel(category: string): string {
     transportation: 'Transportation',
     rentals: 'Rentals',
     invitations: 'Invitations',
+    photo_booth: 'Photo Booth',
     other: 'Other',
   }
   return labels[category] || category.replace('_', ' ')
@@ -344,6 +343,7 @@ export function getCategoryIcon(category: string, props?: IconProps) {
     transportation: <CarIcon {...props} />,
     rentals: <ArmchairIcon {...props} />,
     invitations: <MailIcon {...props} />,
+    photo_booth: <PhotoBoothIcon {...props} />,
     other: <SparklesIcon {...props} />,
   }
   return icons[category] || <SparklesIcon {...props} />
