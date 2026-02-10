@@ -2,7 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LogoutButton } from './logout-button'
-import { getCategoryIcon, getCategoryLabel, PlusIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
+import { PlusIcon, UsersIcon } from '@/components/icons'
+import { SortableVendorList } from './sortable-vendor-list'
 import { LogoIcon } from '@/components/logo'
 import { Greeting } from './greeting'
 
@@ -46,6 +47,7 @@ export default async function DashboardPage() {
       )
     `)
     .eq('wedding_id', wedding.id)
+    .order('position', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: false })
 
   // Calculate stats
@@ -145,40 +147,7 @@ export default async function DashboardPage() {
           </div>
 
           {vendors && vendors.length > 0 ? (
-            <div className="divide-y divide-gray-100">
-              {vendors.map((vendor) => {
-                const latestRequest = vendor.requests?.[0]
-                const status = latestRequest?.status || 'none'
-                
-                return (
-                  <Link 
-                    key={vendor.id} 
-                    href={`/vendors/${vendor.id}`}
-                    className="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65]">
-                        {getCategoryIcon(vendor.category, { size: 20 })}
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">{vendor.name}</p>
-                        <p className="text-sm text-gray-500">
-                          {getCategoryLabel(vendor.category)}
-                          {vendor.contact_name && ` • ${vendor.contact_name}`}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <StatusBadge status={status} />
-                      <span className="flex items-center gap-1 px-3 py-1.5 text-sm text-[#5C7C65]">
-                        View
-                        <ArrowRightIcon size={14} />
-                      </span>
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
+            <SortableVendorList initialVendors={vendors} />
           ) : (
             <div className="p-12 text-center">
               <div className="w-16 h-16 rounded-full bg-[#E8F0E9] flex items-center justify-center text-[#5C7C65] mx-auto mb-4">
@@ -197,27 +166,5 @@ export default async function DashboardPage() {
         </div>
       </main>
     </div>
-  )
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const styles: Record<string, string> = {
-    none: 'bg-gray-100 text-gray-600',
-    pending: 'bg-[#FDF6E3] text-[#96792A]',
-    viewed: 'bg-[#E8F0E9] text-[#5C7C65]',
-    completed: 'bg-[#5C7C65] text-white',
-  }
-  
-  const labels: Record<string, string> = {
-    none: 'No request',
-    pending: 'Pending',
-    viewed: 'Viewed',
-    completed: 'Received',
-  }
-
-  return (
-    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${styles[status] || styles.none}`}>
-      {labels[status] || 'No request'}
-    </span>
   )
 }
