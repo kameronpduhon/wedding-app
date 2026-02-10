@@ -47,7 +47,6 @@ export default async function DashboardPage() {
       )
     `)
     .eq('wedding_id', wedding.id)
-    .order('position', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: false })
 
   // Calculate stats
