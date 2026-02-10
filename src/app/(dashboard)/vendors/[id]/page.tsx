@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { SendRequestButton } from './send-request-button'
 import { RequestCard } from './request-card'
 import { DeleteVendorButton } from './delete-vendor-button'
-import { ArrowLeftIcon, MailIcon, PencilIcon } from '@/components/icons'
+import { ArrowLeftIcon, MailIcon, PencilIcon, getCategoryLabel } from '@/components/icons'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -85,7 +85,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
             </Link>
             <div>
               <h1 className="font-semibold text-gray-900">{vendor.name}</h1>
-              <p className="text-sm text-gray-500 capitalize">{vendor.category.replace('_', ' ')}</p>
+              <p className="text-sm text-gray-500">{getCategoryLabel(vendor.category)}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

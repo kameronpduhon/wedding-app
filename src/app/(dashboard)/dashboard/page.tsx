@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LogoutButton } from './logout-button'
-import { getCategoryIcon, PlusIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
+import { getCategoryIcon, getCategoryLabel, PlusIcon, UsersIcon, ArrowRightIcon } from '@/components/icons'
 import { LogoIcon } from '@/components/logo'
 import { Greeting } from './greeting'
 
@@ -162,8 +162,8 @@ export default async function DashboardPage() {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">{vendor.name}</p>
-                        <p className="text-sm text-gray-500 capitalize">
-                          {vendor.category.replace('_', ' ')}
+                        <p className="text-sm text-gray-500">
+                          {getCategoryLabel(vendor.category)}
                           {vendor.contact_name && ` • ${vendor.contact_name}`}
                         </p>
                       </div>

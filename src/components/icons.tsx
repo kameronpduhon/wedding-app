@@ -295,6 +295,32 @@ export function LipstickIcon({ className = '', size = 24 }: IconProps) {
   )
 }
 
+// Category label mapper
+export function getCategoryLabel(category: string): string {
+  const labels: Record<string, string> = {
+    photographer: 'Photographer',
+    videographer: 'Videographer',
+    caterer: 'Caterer',
+    florist: 'Florist',
+    dj: 'DJ',
+    band: 'Band',
+    cake: 'Cake/Bakery',
+    venue: 'Venue',
+    planner: 'Planner/Coordinator',
+    officiant: 'Officiant',
+    hair_stylist: 'Hair Stylist',
+    makeup_artist: 'Makeup Artist',
+    hair_makeup: 'Hair & Makeup',
+    dress: 'Dress/Attire',
+    suit: 'Suit/Tux',
+    transportation: 'Transportation',
+    rentals: 'Rentals',
+    invitations: 'Invitations',
+    other: 'Other',
+  }
+  return labels[category] || category.replace('_', ' ')
+}
+
 // Category icon mapper
 export function getCategoryIcon(category: string, props?: IconProps) {
   const icons: Record<string, React.ReactNode> = {
