@@ -49,6 +49,15 @@ const CATEGORIES = [
   { value: 'other', label: 'Other', icon: SparklesIcon },
 ]
 
+// Format phone number as (XXX) XXX-XXXX
+function formatPhoneNumber(value: string): string {
+  const digits = value.replace(/\D/g, '')
+  if (digits.length === 0) return ''
+  if (digits.length <= 3) return `(${digits}`
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`
+}
+
 export default function EditVendorPage() {
   const params = useParams()
   const vendorId = params.id as string
@@ -103,7 +112,7 @@ export default function EditVendorPage() {
       setCategory(vendor.category)
       setContactName(vendor.contact_name || '')
       setEmail(vendor.email || '')
-      setPhone(vendor.phone || '')
+      setPhone(formatPhoneNumber(vendor.phone || ''))
       setNotes(vendor.notes || '')
       setIsFetching(false)
     }
@@ -250,7 +259,7 @@ export default function EditVendorPage() {
                 <input
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
                   placeholder="(555) 123-4567"
                 />
