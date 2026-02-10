@@ -55,6 +55,7 @@ export interface Vendor {
   notes: string | null
   total_cost: number | null
   amount_paid: number | null
+  position: number | null
   created_at: string
   updated_at: string
 }

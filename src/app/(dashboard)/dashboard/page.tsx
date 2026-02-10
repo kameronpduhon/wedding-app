@@ -47,7 +47,7 @@ export default async function DashboardPage() {
       )
     `)
     .eq('wedding_id', wedding.id)
-    .order('created_at', { ascending: false })
+    .order('position', { ascending: true })
 
   // Calculate stats
   const totalVendors = vendors?.length || 0
