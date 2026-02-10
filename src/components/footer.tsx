@@ -8,14 +8,18 @@ export function Footer() {
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
-              href="#"
+              href="https://www.facebook.com/profile.php?id=61587538125167"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-[#5C7C65] transition-colors"
               aria-label="Facebook"
             >
               <FacebookIcon size={22} />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/weddingvendorhq/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-[#5C7C65] transition-colors"
               aria-label="Instagram"
             >
