@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Footer } from '@/components/footer'
+import { FREE_VENDOR_LIMIT } from '@/lib/stripe'
 import { 
   ArrowLeftIcon, 
   CameraIcon, 
@@ -72,24 +73,37 @@ export default function NewVendorPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Get wedding ID on mount
+  // Get wedding ID and check vendor limits on mount
   useEffect(() => {
-    const getWedding = async () => {
+    const checkAccessAndGetWedding = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
       const { data: wedding } = await supabase
         .from('weddings')
-        .select('id')
+        .select('id, is_premium')
         .eq('user_id', user.id)
         .single()
 
       if (wedding) {
+        // Check vendor count if not premium
+        if (!wedding.is_premium) {
+          const { count } = await supabase
+            .from('vendors')
+            .select('*', { count: 'exact', head: true })
+            .eq('wedding_id', wedding.id)
+
+          if (count !== null && count >= FREE_VENDOR_LIMIT) {
+            // At limit, redirect to upgrade
+            router.push('/upgrade')
+            return
+          }
+        }
         setWeddingId(wedding.id)
       }
     }
-    getWedding()
-  }, [supabase])
+    checkAccessAndGetWedding()
+  }, [supabase, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

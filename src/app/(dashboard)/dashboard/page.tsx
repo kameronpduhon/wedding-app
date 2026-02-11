@@ -2,11 +2,12 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LogoutButton } from './logout-button'
-import { PlusIcon, UsersIcon } from '@/components/icons'
+import { PlusIcon, UsersIcon, SparklesIcon } from '@/components/icons'
 import { SortableVendorList } from './sortable-vendor-list'
 import { LogoIcon } from '@/components/logo'
 import { Greeting } from './greeting'
 import { Footer } from '@/components/footer'
+import { FREE_VENDOR_LIMIT } from '@/lib/stripe'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -56,6 +57,11 @@ export default async function DashboardPage() {
     acc + (v.requests?.filter((r: { status: string }) => r.status === 'pending').length || 0), 0) || 0
   const completedResponses = vendors?.reduce((acc, v) => 
     acc + (v.requests?.filter((r: { status: string }) => r.status === 'completed').length || 0), 0) || 0
+
+  // Premium status
+  const isPremium = wedding.is_premium || false
+  const isAtLimit = !isPremium && totalVendors >= FREE_VENDOR_LIMIT
+  const addVendorHref = isAtLimit ? '/upgrade' : '/vendors/new'
 
   // Days until wedding - parse as local date (not UTC)
   const daysUntil = wedding.wedding_date 
@@ -109,19 +115,39 @@ export default async function DashboardPage() {
               )}
             </div>
             <Link
-              href="/vendors/new"
-              className="flex items-center gap-2 px-4 py-2 bg-[#87A98F] text-white rounded-lg font-medium hover:bg-[#5C7C65] transition-colors"
+              href={addVendorHref}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                isAtLimit 
+                  ? 'bg-[#C9A962] text-white hover:bg-[#B08A52]' 
+                  : 'bg-[#87A98F] text-white hover:bg-[#5C7C65]'
+              }`}
             >
-              <PlusIcon size={18} />
-              Add Vendor
+              {isAtLimit ? (
+                <>
+                  <SparklesIcon size={18} />
+                  Upgrade to Add More
+                </>
+              ) : (
+                <>
+                  <PlusIcon size={18} />
+                  Add Vendor
+                </>
+              )}
             </Link>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-white rounded-xl p-5 shadow-sm">
-              <p className="text-3xl font-bold text-[#87A98F]">{totalVendors}</p>
-              <p className="text-sm text-gray-600">Total Vendors</p>
+              <p className="text-3xl font-bold text-[#87A98F]">
+                {totalVendors}
+                {!isPremium && (
+                  <span className="text-lg font-normal text-gray-400">/{FREE_VENDOR_LIMIT}</span>
+                )}
+              </p>
+              <p className="text-sm text-gray-600">
+                {isPremium ? 'Vendors (Unlimited)' : 'Free Vendors'}
+              </p>
             </div>
             <div className="bg-white rounded-xl p-5 shadow-sm">
               <p className="text-3xl font-bold text-[#C9A962]">{pendingRequests}</p>
@@ -155,7 +181,7 @@ export default async function DashboardPage() {
               </div>
               <p className="text-gray-600 mb-4">No vendors yet. Add your first vendor to get started!</p>
               <Link
-                href="/vendors/new"
+                href={addVendorHref}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-[#87A98F] text-white rounded-lg font-medium hover:bg-[#5C7C65] transition-colors"
               >
                 <PlusIcon size={18} />
