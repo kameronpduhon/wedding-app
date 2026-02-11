@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { stripe, UNLIMITED_VENDORS_PRICE } from '@/lib/stripe'
+import { getStripe, UNLIMITED_VENDORS_PRICE } from '@/lib/stripe'
 
 export async function POST() {
   try {
@@ -28,6 +28,7 @@ export async function POST() {
     }
 
     // Create Stripe Checkout Session
+    const stripe = getStripe()
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
