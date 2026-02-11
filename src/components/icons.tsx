@@ -354,7 +354,7 @@ export function getCategoryIcon(category: string, props?: IconProps) {
     caterer: <UtensilsIcon {...props} />,
     florist: <FlowerIcon {...props} />,
     dj: <MusicIcon {...props} />,
-    band: <GuitarIcon {...props} />,
+    band: <MusicIcon {...props} />,
     cake: <CakeIcon {...props} />,
     venue: <MapPinIcon {...props} />,
     planner: <ClipboardIcon {...props} />,

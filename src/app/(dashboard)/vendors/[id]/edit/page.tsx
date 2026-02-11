@@ -33,7 +33,7 @@ const CATEGORIES = [
   { value: 'caterer', label: 'Caterer', icon: UtensilsIcon },
   { value: 'florist', label: 'Florist', icon: FlowerIcon },
   { value: 'dj', label: 'DJ', icon: MusicIcon },
-  { value: 'band', label: 'Band', icon: GuitarIcon },
+  { value: 'band', label: 'Band', icon: MusicIcon },
   { value: 'cake', label: 'Cake/Bakery', icon: CakeIcon },
   { value: 'venue', label: 'Venue', icon: MapPinIcon },
   { value: 'planner', label: 'Wedding Planner/Coordinator', icon: ClipboardIcon },
