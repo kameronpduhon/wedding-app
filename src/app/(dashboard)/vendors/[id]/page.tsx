@@ -122,9 +122,9 @@ export default async function VendorDetailPage({ params }: PageProps) {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8 space-y-6 flex-1">
+      <main className="max-w-7xl mx-auto px-4 py-8 flex-1 flex flex-col gap-6">
         {/* Vendor Info */}
-        <div className="bg-white rounded-xl shadow-sm p-6 min-h-[280px]">
+        <div className="bg-white rounded-xl shadow-sm p-6 flex-1 overflow-auto">
           <h2 className="font-semibold text-gray-900 mb-4">Contact Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {vendor.contact_name && (
@@ -165,7 +165,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
         </div>
 
         {/* Documents */}
-        <div className="bg-white rounded-xl shadow-sm p-6 min-h-[280px]">
+        <div className="bg-white rounded-xl shadow-sm p-6 flex-1 overflow-auto">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-gray-900">Documents</h2>
             <DocumentUpload vendorId={vendor.id} />
@@ -174,7 +174,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
         </div>
 
         {/* Requests & Responses */}
-        <div className="bg-white rounded-xl shadow-sm p-6 min-h-[280px]">
+        <div className="bg-white rounded-xl shadow-sm p-6 flex-1 overflow-auto">
           <h2 className="font-semibold text-gray-900 mb-4">Requests & Responses</h2>
           
           {vendor.requests && vendor.requests.length > 0 ? (
