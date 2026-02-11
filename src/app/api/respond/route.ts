@@ -163,7 +163,7 @@ export async function POST(request: NextRequest) {
         const categoryDisplay = vendor.category.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())
         
         await resend.emails.send({
-          from: 'Wedding Vendor HQ <onboarding@resend.dev>',
+          from: 'Wedding Vendor HQ <notifications@send.weddingvendorhq.com>',
           to: userData.user.email,
           subject: `${vendor.name} responded to your request!`,
           react: VendorResponseNotification({
