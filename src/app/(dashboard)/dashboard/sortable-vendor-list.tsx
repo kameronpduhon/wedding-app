@@ -116,8 +116,8 @@ function SortableVendorItem({ vendor }: { vendor: Vendor }) {
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status={status} />
-          <span className="flex items-center gap-1 px-3 py-1.5 text-sm text-[#5C7C65]">
-            View
+          <span className="flex items-center gap-1 px-2 sm:px-3 py-1.5 text-sm text-[#5C7C65]">
+            <span className="hidden sm:inline">View</span>
             <ArrowRightIcon size={14} />
           </span>
         </div>

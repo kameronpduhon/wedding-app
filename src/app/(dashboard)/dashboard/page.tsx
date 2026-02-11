@@ -101,7 +101,7 @@ export default async function DashboardPage() {
       <main className="max-w-6xl mx-auto px-4 py-8 flex-1">
         {/* Welcome + Stats */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
               <Greeting name={wedding.partner1_name} />
               {daysUntil && daysUntil > 0 && (
