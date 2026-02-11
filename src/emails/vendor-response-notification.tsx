@@ -62,7 +62,7 @@ export default function VendorResponseNotification({
             {vendorNote && (
               <Section style={noteSection}>
                 <Text style={noteLabel}>Their note:</Text>
-                <Text style={noteText}>"{vendorNote}"</Text>
+                <Text style={noteText}>&ldquo;{vendorNote}&rdquo;</Text>
               </Section>
             )}
 

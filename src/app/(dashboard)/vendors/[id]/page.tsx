@@ -170,7 +170,7 @@ export default async function VendorDetailPage({ params }: PageProps) {
             <h2 className="font-semibold text-gray-900">Documents</h2>
             <DocumentUpload vendorId={vendor.id} />
           </div>
-          <DocumentList documents={documents || []} vendorId={vendor.id} />
+          <DocumentList documents={documents || []} />
         </div>
 
         {/* Requests & Responses */}

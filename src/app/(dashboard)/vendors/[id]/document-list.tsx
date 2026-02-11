@@ -16,7 +16,6 @@ interface Document {
 
 interface DocumentListProps {
   documents: Document[]
-  vendorId: string
 }
 
 function formatFileSize(bytes: number | null): string {
@@ -35,7 +34,7 @@ function getFileIcon(fileType: string | null): string {
   return '📄'
 }
 
-export function DocumentList({ documents, vendorId }: DocumentListProps) {
+export function DocumentList({ documents }: DocumentListProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()

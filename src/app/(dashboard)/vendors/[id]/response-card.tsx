@@ -74,7 +74,7 @@ export function ResponseCard({ response }: ResponseCardProps) {
       {response.vendor_note && (
         <div className="bg-white rounded-lg p-3 mb-3">
           <p className="text-xs text-gray-500 mb-1">Note from vendor:</p>
-          <p className="text-gray-700 text-sm">"{response.vendor_note}"</p>
+          <p className="text-gray-700 text-sm">&ldquo;{response.vendor_note}&rdquo;</p>
         </div>
       )}
 
