@@ -18,18 +18,31 @@ export default function OnboardingPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Pre-fill name from user profile
+  // Redirect to dashboard if user already has a wedding, otherwise pre-fill name
   useEffect(() => {
-    const getUser = async () => {
+    const init = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (user?.user_metadata?.full_name) {
+      if (!user) return
+
+      const { data: existingWedding } = await supabase
+        .from('weddings')
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle()
+
+      if (existingWedding) {
+        router.push('/dashboard')
+        return
+      }
+
+      if (user.user_metadata?.full_name) {
         const nameParts = user.user_metadata.full_name.split(' ')
         setFirstName(nameParts[0] || '')
         setLastName(nameParts.slice(1).join(' ') || '')
       }
     }
-    getUser()
-  }, [supabase])
+    init()
+  }, [supabase, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
