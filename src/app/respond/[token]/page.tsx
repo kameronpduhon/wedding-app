@@ -1,14 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
+import { getServiceRoleClient } from '@/lib/supabase/service'
 import { VendorResponseForm } from './vendor-response-form'
 import { LogoIcon } from '@/components/logo'
-
-// Use service role for public vendor page (bypasses RLS)
-// This is safe because we're only exposing data tied to a valid token
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
 
 interface PageProps {
   params: Promise<{ token: string }>
@@ -18,7 +11,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
   const { token } = await params
 
   // Fetch request with vendor and wedding info using admin client
-  const { data: request, error } = await supabaseAdmin
+  const { data: request, error } = await getServiceRoleClient()
     .from('requests')
     .select(`
       *,
@@ -45,7 +38,7 @@ export default async function VendorResponsePage({ params }: PageProps) {
 
   // Mark as viewed if first time
   if (request.status === 'pending') {
-    await supabaseAdmin
+    await getServiceRoleClient()
       .from('requests')
       .update({ 
         status: 'viewed', 

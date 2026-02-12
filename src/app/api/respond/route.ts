@@ -1,19 +1,24 @@
-import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
-import { resend } from '@/lib/resend'
+import { getResend } from '@/lib/resend'
+import { getServiceRoleClient } from '@/lib/supabase/service'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limiter'
 import VendorResponseNotification from '@/emails/vendor-response-notification'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const ALLOWED_MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png']
 const MAX_VENDOR_NOTE_LENGTH = 5000
 
-// Use service role to bypass RLS for public vendor submissions
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 requests per hour per IP
+  const ip = getClientIp(request)
+  const limit = checkRateLimit(ip, { windowMs: 60 * 60 * 1000, maxRequests: 10 })
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(limit.resetIn) } }
+    )
+  }
+
   try {
     const formData = await request.formData()
     
@@ -32,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify the token matches the request and get full details for notification
-    const { data: existingRequest, error: verifyError } = await supabaseAdmin
+    const { data: existingRequest, error: verifyError } = await getServiceRoleClient()
       .from('requests')
       .select(`
         id, 
@@ -74,7 +79,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 1. Create the response record
-    const { data: response, error: responseError } = await supabaseAdmin
+    const { data: response, error: responseError } = await getServiceRoleClient()
       .from('responses')
       .insert({
         request_id: requestId,
@@ -107,7 +112,7 @@ export async function POST(request: NextRequest) {
       const arrayBuffer = await file.arrayBuffer()
       const buffer = new Uint8Array(arrayBuffer)
 
-      const { error: uploadError } = await supabaseAdmin.storage
+      const { error: uploadError } = await getServiceRoleClient().storage
         .from('vendor-files')
         .upload(filePath, buffer, {
           contentType: file.type,
@@ -120,7 +125,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Record file in database
-      const { error: fileError } = await supabaseAdmin
+      const { error: fileError } = await getServiceRoleClient()
         .from('files')
         .insert({
           response_id: response.id,
@@ -134,7 +139,7 @@ export async function POST(request: NextRequest) {
       if (fileError) {
         console.error('File record error:', fileError)
         // Clean up orphaned storage file
-        await supabaseAdmin.storage.from('vendor-files').remove([filePath])
+        await getServiceRoleClient().storage.from('vendor-files').remove([filePath])
         throw new Error(`Failed to record ${fileType}: ${fileError.message}`)
       }
 
@@ -151,7 +156,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 3. Mark request as completed
-    const { error: updateError } = await supabaseAdmin
+    const { error: updateError } = await getServiceRoleClient()
       .from('requests')
       .update({ 
         status: 'completed',
@@ -167,7 +172,7 @@ export async function POST(request: NextRequest) {
     // 4. Send email notification to bride
     try {
       // Get bride's email from auth.users
-      const { data: userData, error: userError } = await supabaseAdmin.auth.admin.getUserById(
+      const { data: userData, error: userError } = await getServiceRoleClient().auth.admin.getUserById(
         vendor.wedding.user_id
       )
       
@@ -180,7 +185,7 @@ export async function POST(request: NextRequest) {
         // Format category for display
         const categoryDisplay = vendor.category.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())
         
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'Wedding Vendor HQ <notifications@send.weddingvendorhq.com>',
           to: userData.user.email,
           subject: `${vendor.name} responded to your request!`,

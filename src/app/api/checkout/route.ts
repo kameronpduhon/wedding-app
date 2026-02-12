@@ -1,8 +1,19 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getStripe, UNLIMITED_VENDORS_PRICE } from '@/lib/stripe'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limiter'
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  // Rate limit: 5 requests per hour per IP
+  const ip = getClientIp(request)
+  const limit = checkRateLimit(ip, { windowMs: 60 * 60 * 1000, maxRequests: 5 })
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(limit.resetIn) } }
+    )
+  }
+
   try {
     const supabase = await createClient()
     

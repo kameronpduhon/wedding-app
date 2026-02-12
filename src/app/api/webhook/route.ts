@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getStripe } from '@/lib/stripe'
-import { createClient } from '@supabase/supabase-js'
+import { getServiceRoleClient } from '@/lib/supabase/service'
 import Stripe from 'stripe'
-
-// Use service role for webhook (no user session)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
 
 export async function POST(request: NextRequest) {
   const body = await request.text()
@@ -44,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     if (weddingId) {
       // Update wedding to premium
-      const { error } = await supabase
+      const { error } = await getServiceRoleClient()
         .from('weddings')
         .update({
           is_premium: true,
