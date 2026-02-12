@@ -6,6 +6,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { LogoIcon } from '@/components/logo'
 
+function sanitizeAuthError(message: string): string {
+  if (message.toLowerCase().includes('rate limit') || message.toLowerCase().includes('too many')) {
+    return 'Too many login attempts. Please try again later.'
+  }
+  return 'Invalid email or password.'
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -25,7 +32,7 @@ export default function LoginPage() {
     })
 
     if (error) {
-      setError(error.message)
+      setError(sanitizeAuthError(error.message))
       setIsLoading(false)
       return
     }

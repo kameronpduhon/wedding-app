@@ -128,7 +128,8 @@ function SortableVendorItem({ vendor }: { vendor: Vendor }) {
 
 export function SortableVendorList({ initialVendors }: SortableVendorListProps) {
   const [vendors, setVendors] = useState(initialVendors)
-  
+  const [saveError, setSaveError] = useState<string | null>(null)
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -150,11 +151,14 @@ export function SortableVendorList({ initialVendors }: SortableVendorListProps) 
       const previousVendors = vendors
       const newVendors = arrayMove(vendors, oldIndex, newIndex)
       setVendors(newVendors)
+      setSaveError(null)
 
       // Save new order to database, revert on failure
       const result = await updateVendorPositions(newVendors.map((v) => v.id))
       if (!result.success) {
         setVendors(previousVendors)
+        setSaveError('Failed to save vendor order. Please try again.')
+        setTimeout(() => setSaveError(null), 4000)
       }
     }
   }
@@ -167,6 +171,11 @@ export function SortableVendorList({ initialVendors }: SortableVendorListProps) 
     >
       <SortableContext items={vendors.map((v) => v.id)} strategy={verticalListSortingStrategy}>
         <div>
+          {saveError && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm mx-4 mt-2">
+              {saveError}
+            </div>
+          )}
           {vendors.map((vendor) => (
             <SortableVendorItem key={vendor.id} vendor={vendor} />
           ))}

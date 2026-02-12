@@ -36,6 +36,39 @@ export default async function VendorResponsePage({ params }: PageProps) {
     notFound()
   }
 
+  // Check if token is expired (14 days)
+  const TOKEN_EXPIRY_DAYS = 14
+  const createdAt = new Date(request.created_at)
+  const now = new Date()
+  const daysSinceCreation = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24)
+  const isExpired = daysSinceCreation > TOKEN_EXPIRY_DAYS && request.status !== 'completed'
+
+  if (isExpired) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#E8F0E9] to-white">
+        <div className="max-w-lg mx-auto px-4 py-12">
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-4">
+              <LogoIcon size={64} />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">Link Expired</h1>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 mb-4">
+              This request link has expired. Please contact {wedding.partner1_name} to send a new request.
+            </p>
+            <p className="text-gray-400 text-sm">
+              Request links are valid for {TOKEN_EXPIRY_DAYS} days.
+            </p>
+          </div>
+          <p className="text-center text-gray-400 text-sm mt-8">
+            Powered by Wedding Vendor HQ
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   // Mark as viewed if first time
   if (request.status === 'pending') {
     await getServiceRoleClient()

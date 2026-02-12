@@ -36,16 +36,19 @@ function getFileIcon(fileType: string | null): string {
 
 export function DocumentList({ documents }: DocumentListProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
   async function handleDownload(doc: Document) {
-    const { data, error } = await supabase.storage
+    setError(null)
+    const { data, error: downloadError } = await supabase.storage
       .from('vendor-documents')
       .createSignedUrl(doc.storage_path, 60) // 60 second expiry
 
-    if (error) {
-      console.error('Download error:', error)
+    if (downloadError) {
+      console.error('Download error:', downloadError)
+      setError(`Failed to download "${doc.file_name}". Please try again.`)
       return
     }
 
@@ -57,22 +60,34 @@ export function DocumentList({ documents }: DocumentListProps) {
     if (!confirm(`Delete "${doc.file_name}"? This cannot be undone.`)) return
 
     setDeletingId(doc.id)
+    setError(null)
 
     try {
       // Delete from storage
-      await supabase.storage
+      const { error: storageError } = await supabase.storage
         .from('vendor-documents')
         .remove([doc.storage_path])
 
+      if (storageError) {
+        setError(`Failed to delete file from storage. Please try again.`)
+        return
+      }
+
       // Delete from database
-      await supabase
+      const { error: dbError } = await supabase
         .from('vendor_documents')
         .delete()
         .eq('id', doc.id)
 
+      if (dbError) {
+        setError(`File removed from storage but failed to update database. Please refresh.`)
+        return
+      }
+
       router.refresh()
     } catch (err) {
       console.error('Delete error:', err)
+      setError('Failed to delete document. Please try again.')
     } finally {
       setDeletingId(null)
     }
@@ -86,6 +101,11 @@ export function DocumentList({ documents }: DocumentListProps) {
 
   return (
     <div className="space-y-2">
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+          {error}
+        </div>
+      )}
       {documents.map((doc) => (
         <div
           key={doc.id}

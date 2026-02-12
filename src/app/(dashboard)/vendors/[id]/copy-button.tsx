@@ -4,20 +4,27 @@ import { useState } from 'react'
 
 export function CopyButton({ token }: { token: string }) {
   const [copied, setCopied] = useState(false)
+  const [copyError, setCopyError] = useState(false)
 
   const handleCopy = async () => {
     const url = `${window.location.origin}/respond/${token}`
-    await navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setCopyError(false)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setCopyError(true)
+      setTimeout(() => setCopyError(false), 2000)
+    }
   }
 
   return (
     <button
       onClick={handleCopy}
-      className="px-2 py-1 text-xs text-pink-600 hover:bg-pink-50 rounded transition-colors"
+      className={`px-2 py-1 text-xs rounded transition-colors ${copyError ? 'text-red-600 hover:bg-red-50' : 'text-pink-600 hover:bg-pink-50'}`}
     >
-      {copied ? '✓ Copied!' : 'Copy'}
+      {copyError ? 'Failed to copy' : copied ? '✓ Copied!' : 'Copy'}
     </button>
   )
 }

@@ -6,6 +6,16 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { LogoIcon } from '@/components/logo'
 
+function sanitizeSignupError(message: string): string {
+  if (message.toLowerCase().includes('already registered') || message.toLowerCase().includes('already been registered')) {
+    return 'Unable to create account. Please try a different email or sign in.'
+  }
+  if (message.toLowerCase().includes('rate limit') || message.toLowerCase().includes('too many')) {
+    return 'Too many attempts. Please try again later.'
+  }
+  return 'Unable to create account. Please try again.'
+}
+
 export default function SignupPage() {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
@@ -31,7 +41,7 @@ export default function SignupPage() {
     })
 
     if (error) {
-      setError(error.message)
+      setError(sanitizeSignupError(error.message))
       setIsLoading(false)
       return
     }

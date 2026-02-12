@@ -52,7 +52,11 @@ export function DocumentUpload({ vendorId }: DocumentUploadProps) {
           storage_path: fileName,
         })
 
-      if (dbError) throw dbError
+      if (dbError) {
+        // Rollback: delete orphaned file from storage
+        await supabase.storage.from('vendor-documents').remove([fileName])
+        throw dbError
+      }
 
       // Refresh the page to show new document
       router.refresh()

@@ -45,6 +45,33 @@ export function SendRequestButton({
     setIsLoading(true)
     setError(null)
 
+    // Verify vendor belongs to current user's wedding
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      setError('You must be logged in.')
+      setIsLoading(false)
+      return
+    }
+
+    const { data: vendor, error: vendorError } = await supabase
+      .from('vendors')
+      .select('id, wedding:weddings!inner(user_id)')
+      .eq('id', vendorId)
+      .single()
+
+    if (vendorError || !vendor) {
+      setError('Vendor not found.')
+      setIsLoading(false)
+      return
+    }
+
+    const wedding = vendor.wedding as unknown as { user_id: string }
+    if (wedding.user_id !== user.id) {
+      setError('You do not have permission to send requests for this vendor.')
+      setIsLoading(false)
+      return
+    }
+
     const { data, error } = await supabase
       .from('requests')
       .insert({

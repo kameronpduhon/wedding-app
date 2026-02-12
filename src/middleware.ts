@@ -1,6 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+function isValidRedirect(path: string): boolean {
+  return path.startsWith('/') && !path.startsWith('//') && !path.includes(':')
+}
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -44,7 +48,9 @@ export async function middleware(request: NextRequest) {
   // Redirect unauthenticated users away from protected routes
   if (isProtectedRoute && !user) {
     const redirectUrl = new URL('/login', request.url)
-    redirectUrl.searchParams.set('redirect', pathname)
+    if (isValidRedirect(pathname)) {
+      redirectUrl.searchParams.set('redirect', pathname)
+    }
     return NextResponse.redirect(redirectUrl)
   }
 

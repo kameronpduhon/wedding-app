@@ -44,6 +44,18 @@ export default function OnboardingPage() {
       return
     }
 
+    let parsedBudget: number | null = null
+    if (budget) {
+      const sanitized = budget.replace(/[^0-9.]/g, '')
+      const parsed = parseFloat(sanitized)
+      if (isNaN(parsed) || parsed <= 0) {
+        setError('Please enter a valid budget amount')
+        setIsLoading(false)
+        return
+      }
+      parsedBudget = parsed
+    }
+
     const { error } = await supabase
       .from('weddings')
       .insert({
@@ -52,7 +64,7 @@ export default function OnboardingPage() {
         partner2_name: partner2Name || null,
         wedding_date: weddingDate || null,
         venue_name: venueName || null,
-        budget: budget ? parseFloat(budget) : null,
+        budget: parsedBudget,
       })
 
     if (error) {
@@ -196,16 +208,6 @@ export default function OnboardingPage() {
           </form>
         </div>
 
-        {/* Skip option */}
-        <p className="text-center text-gray-500 text-sm mt-4">
-          <button 
-            onClick={() => router.push('/dashboard')}
-            className="hover:text-[#5C7C65] transition-colors flex items-center gap-1 mx-auto"
-          >
-            Skip for now
-            <ArrowRightIcon size={14} />
-          </button>
-        </p>
       </div>
     </div>
   )

@@ -9,26 +9,36 @@ import { CheckIcon, ArrowLeftIcon } from '@/components/icons'
 
 export default function UpgradePage() {
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
   const handleUpgrade = async () => {
     setIsLoading(true)
-    
+    setError(null)
+
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
       })
-      
+
+      if (!response.ok) {
+        setError('Unable to start checkout. Please try again.')
+        setIsLoading(false)
+        return
+      }
+
       const data = await response.json()
-      
+
       if (data.url) {
         window.location.href = data.url
       } else {
         console.error('No checkout URL returned')
+        setError('Unable to start checkout. Please try again.')
         setIsLoading(false)
       }
-    } catch (error) {
-      console.error('Checkout error:', error)
+    } catch (err) {
+      console.error('Checkout error:', err)
+      setError('Unable to start checkout. Please try again.')
       setIsLoading(false)
     }
   }
@@ -107,6 +117,12 @@ export default function UpgradePage() {
             >
               {isLoading ? 'Redirecting to checkout...' : 'Upgrade Now'}
             </button>
+
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm mt-4">
+                {error}
+              </div>
+            )}
 
             <p className="text-center text-gray-400 text-xs mt-4">
               Secure payment powered by Stripe

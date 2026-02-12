@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 interface ResponseCardProps {
@@ -18,16 +19,18 @@ interface ResponseCardProps {
 }
 
 export function ResponseCard({ response }: ResponseCardProps) {
+  const [downloadError, setDownloadError] = useState<string | null>(null)
   const supabase = createClient()
 
   const handleDownload = async (filePath: string, fileName: string) => {
+    setDownloadError(null)
     const { data, error } = await supabase.storage
       .from('vendor-files')
       .download(filePath)
 
     if (error) {
       console.error('Download error:', error)
-      alert('Failed to download file')
+      setDownloadError(`Failed to download "${fileName}". Please try again.`)
       return
     }
 
@@ -75,6 +78,13 @@ export function ResponseCard({ response }: ResponseCardProps) {
         <div className="bg-white rounded-lg p-3 mb-3">
           <p className="text-xs text-gray-500 mb-1">Note from vendor:</p>
           <p className="text-gray-700 text-sm">&ldquo;{response.vendor_note}&rdquo;</p>
+        </div>
+      )}
+
+      {/* Download Error */}
+      {downloadError && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm mb-3">
+          {downloadError}
         </div>
       )}
 
