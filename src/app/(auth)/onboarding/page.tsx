@@ -37,10 +37,22 @@ export default function OnboardingPage() {
     setError(null)
 
     const { data: { user } } = await supabase.auth.getUser()
-    
+
     if (!user) {
       setError('You must be logged in')
       setIsLoading(false)
+      return
+    }
+
+    // Check if user already has a wedding (e.g. navigated back to onboarding)
+    const { data: existingWedding } = await supabase
+      .from('weddings')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle()
+
+    if (existingWedding) {
+      router.push('/dashboard')
       return
     }
 
@@ -68,7 +80,11 @@ export default function OnboardingPage() {
       })
 
     if (error) {
-      setError(error.message)
+      if (error.code === '23505' || error.message.includes('duplicate key')) {
+        setError('A wedding already exists for this account.')
+      } else {
+        setError(error.message)
+      }
       setIsLoading(false)
       return
     }
