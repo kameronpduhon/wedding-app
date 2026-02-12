@@ -3,6 +3,9 @@
 import { useState, useRef } from 'react'
 import { SparklesIcon } from '@/components/icons'
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
+const MAX_VENDOR_NOTE_LENGTH = 5000
+
 interface VendorResponseFormProps {
   requestId: string
   token: string
@@ -32,6 +35,18 @@ export function VendorResponseForm({
     setError(null)
 
     try {
+      // Client-side file size validation
+      if (invoiceFile && invoiceFile.size > MAX_FILE_SIZE) {
+        setError('Invoice file exceeds maximum size of 10MB')
+        setIsSubmitting(false)
+        return
+      }
+      if (contractFile && contractFile.size > MAX_FILE_SIZE) {
+        setError('Contract file exceeds maximum size of 10MB')
+        setIsSubmitting(false)
+        return
+      }
+
       const formData = new FormData()
       formData.append('requestId', requestId)
       formData.append('token', token)
@@ -178,6 +193,7 @@ export function VendorResponseForm({
           value={vendorNote}
           onChange={(e) => setVendorNote(e.target.value)}
           rows={3}
+          maxLength={MAX_VENDOR_NOTE_LENGTH}
           placeholder="Add a note back to the couple..."
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#87A98F] focus:border-[#87A98F] outline-none transition-colors"
         />

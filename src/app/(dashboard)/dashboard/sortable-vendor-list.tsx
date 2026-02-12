@@ -147,11 +147,15 @@ export function SortableVendorList({ initialVendors }: SortableVendorListProps) 
       const oldIndex = vendors.findIndex((v) => v.id === active.id)
       const newIndex = vendors.findIndex((v) => v.id === over.id)
 
+      const previousVendors = vendors
       const newVendors = arrayMove(vendors, oldIndex, newIndex)
       setVendors(newVendors)
 
-      // Save new order to database
-      await updateVendorPositions(newVendors.map((v) => v.id))
+      // Save new order to database, revert on failure
+      const result = await updateVendorPositions(newVendors.map((v) => v.id))
+      if (!result.success) {
+        setVendors(previousVendors)
+      }
     }
   }
 

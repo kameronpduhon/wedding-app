@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Footer } from '@/components/footer'
 import { FREE_VENDOR_LIMIT } from '@/lib/stripe'
+import { createVendor } from './actions'
 import { 
   ArrowLeftIcon, 
   CameraIcon, 
@@ -67,7 +68,6 @@ export default function NewVendorPage() {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [notes, setNotes] = useState('')
-  const [weddingId, setWeddingId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -99,7 +99,6 @@ export default function NewVendorPage() {
             return
           }
         }
-        setWeddingId(wedding.id)
       }
     }
     checkAccessAndGetWedding()
@@ -110,26 +109,21 @@ export default function NewVendorPage() {
     setIsLoading(true)
     setError(null)
 
-    if (!weddingId) {
-      setError('No wedding found. Please complete onboarding first.')
-      setIsLoading(false)
-      return
-    }
+    const result = await createVendor({
+      name,
+      category,
+      contact_name: contactName || undefined,
+      email: email || undefined,
+      phone: phone || undefined,
+      notes: notes || undefined,
+    })
 
-    const { error } = await supabase
-      .from('vendors')
-      .insert({
-        wedding_id: weddingId,
-        name,
-        category,
-        contact_name: contactName || null,
-        email: email || null,
-        phone: phone || null,
-        notes: notes || null,
-      })
-
-    if (error) {
-      setError(error.message)
+    if (result.error) {
+      if (result.error === 'vendor_limit_reached') {
+        router.push('/upgrade')
+        return
+      }
+      setError(result.error)
       setIsLoading(false)
       return
     }

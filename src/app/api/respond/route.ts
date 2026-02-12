@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { resend } from '@/lib/resend'
 import VendorResponseNotification from '@/emails/vendor-response-notification'
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
+const ALLOWED_MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png']
+const MAX_VENDOR_NOTE_LENGTH = 5000
+
 // Use service role to bypass RLS for public vendor submissions
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -21,6 +25,10 @@ export async function POST(request: NextRequest) {
 
     if (!requestId || !token) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+
+    if (vendorNote && vendorNote.length > MAX_VENDOR_NOTE_LENGTH) {
+      return NextResponse.json({ error: `Vendor note must be ${MAX_VENDOR_NOTE_LENGTH} characters or less` }, { status: 400 })
     }
 
     // Verify the token matches the request and get full details for notification
@@ -84,6 +92,14 @@ export async function POST(request: NextRequest) {
     const filesUploaded: string[] = []
     
     const uploadFile = async (file: File, fileType: 'invoice' | 'contract') => {
+      if (file.size > MAX_FILE_SIZE) {
+        throw new Error(`${fileType} exceeds maximum file size of 10MB`)
+      }
+
+      if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+        throw new Error(`${fileType} has invalid file type. Allowed: PDF, JPG, PNG`)
+      }
+
       const fileExt = file.name.split('.').pop()
       const filePath = `${token}/${fileType}-${Date.now()}.${fileExt}`
 
@@ -117,9 +133,11 @@ export async function POST(request: NextRequest) {
 
       if (fileError) {
         console.error('File record error:', fileError)
+        // Clean up orphaned storage file
+        await supabaseAdmin.storage.from('vendor-files').remove([filePath])
         throw new Error(`Failed to record ${fileType}: ${fileError.message}`)
       }
-      
+
       // Track for notification
       filesUploaded.push(fileType === 'invoice' ? 'Invoice / Quote' : 'Contract')
     }
@@ -180,7 +198,11 @@ export async function POST(request: NextRequest) {
       }
     } catch (emailError) {
       // Don't fail the whole request if email fails - just log it
-      console.error('Failed to send notification email:', emailError)
+      console.error('[EMAIL_FAILURE] Failed to send vendor response notification:', {
+        requestId,
+        vendorId: vendor.id,
+        error: emailError,
+      })
     }
 
     return NextResponse.json({ success: true })

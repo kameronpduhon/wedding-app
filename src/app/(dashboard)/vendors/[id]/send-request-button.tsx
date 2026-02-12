@@ -26,6 +26,7 @@ export function SendRequestButton({
 }: SendRequestButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [requestInvoice, setRequestInvoice] = useState(true)
   const [requestContract, setRequestContract] = useState(true)
   const [requestAvailability, setRequestAvailability] = useState(false)
@@ -42,6 +43,7 @@ export function SendRequestButton({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setError(null)
 
     const { data, error } = await supabase
       .from('requests')
@@ -63,7 +65,7 @@ export function SendRequestButton({
 
     if (error) {
       console.error('Error creating request:', error)
-      alert('Failed to create request: ' + error.message)
+      setError('Failed to create request. Please try again.')
       return
     }
 
@@ -141,6 +143,7 @@ ${brideName}`
     setCopiedSubject(false)
     setCopiedBody(false)
     setPersonalNote('')
+    setError(null)
     router.refresh()
   }
 
@@ -300,6 +303,14 @@ ${brideName}`
                     <p className="text-xs text-gray-500 mt-1">This will be included in the email template</p>
                   </div>
                 </div>
+
+                {error && (
+                  <div className="px-6">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+                      {error}
+                    </div>
+                  </div>
+                )}
 
                 <div className="p-6 border-t border-gray-100 flex gap-3">
                   <button

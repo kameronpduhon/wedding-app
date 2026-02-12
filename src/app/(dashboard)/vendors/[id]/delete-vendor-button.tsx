@@ -13,12 +13,14 @@ interface DeleteVendorButtonProps {
 export function DeleteVendorButton({ vendorId, vendorName }: DeleteVendorButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
   const handleDelete = async () => {
     setIsDeleting(true)
-    
+    setError(null)
+
     const { error } = await supabase
       .from('vendors')
       .delete()
@@ -26,11 +28,17 @@ export function DeleteVendorButton({ vendorId, vendorName }: DeleteVendorButtonP
 
     if (error) {
       console.error('Delete error:', error)
+      setError('Failed to delete vendor. Please try again.')
       setIsDeleting(false)
       return
     }
 
     router.push('/dashboard')
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
+    setError(null)
   }
 
   return (
@@ -53,10 +61,16 @@ export function DeleteVendorButton({ vendorId, vendorName }: DeleteVendorButtonP
             <p className="text-gray-600 mb-6">
               Are you sure you want to delete <strong>{vendorName}</strong>? This will also delete all requests and responses associated with this vendor. This action cannot be undone.
             </p>
-            
+
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm mb-4">
+                {error}
+              </div>
+            )}
+
             <div className="flex gap-3">
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 disabled={isDeleting}
                 className="flex-1 py-2.5 px-4 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
               >
