@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       ],
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://weddingvendorhq.com'}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://weddingvendorhq.com'}/upgrade`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://weddingvendorhq.com'}/dashboard`,
       metadata: {
         wedding_id: wedding.id,
         user_id: user.id,

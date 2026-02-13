@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { LogoIcon } from '@/components/logo'
 
@@ -19,6 +19,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,7 +38,11 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/dashboard')
+    const redirectTo = searchParams.get('redirect')
+    const destination = redirectTo && redirectTo.startsWith('/') && !redirectTo.startsWith('//') && !redirectTo.includes(':')
+      ? redirectTo
+      : '/dashboard'
+    router.push(destination)
   }
 
   return (
