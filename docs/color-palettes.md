@@ -96,8 +96,8 @@ For a vendor coordination app, I'd lean toward **Option 2 (Modern Garden)** or *
 - **Modern Garden** feels fresh and organized — matches the "getting stuff done" energy of coordinating vendors
 - **Elegant Luxe** feels premium and trustworthy — makes brides feel like they're using a high-quality tool
 
-But let's see what CC gravitates toward! She's the real bride perspective here.
+Final pick will be informed by user-research feedback from a real bride.
 
 ---
 
-*Created: Feb 5, 2026*
+*Created: Feb 2026*

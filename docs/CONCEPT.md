@@ -1,8 +1,7 @@
 # Wedding Vendor Coordination App
 
 **Status:** Concept/Planning
-**Started:** Feb 5, 2026
-**Founders:** Kameron + Drew 🦈
+**Started:** Feb 2026
 
 ---
 
@@ -16,7 +15,7 @@ Brides book multiple vendors (photographer, DJ, caterer, florist, venue, etc.) b
 
 Everything lives in scattered emails, texts, and personal notes. Stressful.
 
-**Validated by:** CC (real bride, planning wedding for June 2026)
+**Validated by:** user research with a bride actively planning her wedding
 
 ---
 
@@ -144,7 +143,7 @@ Ideas:
 
 ---
 
-## User Research — CC (Real Bride)
+## User Research — Real Bride Interview
 
 **Q: What's the biggest headache right now?**
 > Keeping track of invoices/contracts. They're all in my personal email.
@@ -173,14 +172,13 @@ Ideas:
 
 ## Next Steps
 
-- [ ] Get CC's answers on pain points
 - [ ] Finalize feature list for MVP
 - [ ] Pick tech stack
 - [ ] Design basic wireframes
-- [ ] Build it 🚀
+- [ ] Build it
 
 ---
 
 ## Notes
 
-*Feb 5, 2026 — Initial brainstorm with Kameron during class. CC validated the idea from real bride perspective.*
+*Feb 2026 — Initial brainstorm. Idea validated against a real bride's pain points during user research.*

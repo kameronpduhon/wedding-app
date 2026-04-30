@@ -1,10 +1,10 @@
-# 🔐 Stripe Setup Plan — Wedding Vendor HQ
+# Stripe Setup Plan — Wedding Vendor HQ
 
-## Part 1: Kameron's Tasks (Account Setup)
+## Part 1: Account Setup
 
 ### 1. Create Stripe Account
 - Go to [stripe.com](https://stripe.com) → Sign up
-- Use your personal email (can change later)
+- Use the operator's personal email (can change later)
 - **Don't need a business entity yet** — can start as sole proprietor
 
 ### 2. Activate Your Account
@@ -26,11 +26,11 @@ Stripe will ask for:
 Once activated, go to **Developers → API Keys**:
 - Copy the **Publishable key** (starts with `pk_`)
 - Copy the **Secret key** (starts with `sk_`)
-- Add to app's environment variables
+- Add to the app's environment variables
 
 ---
 
-## Part 2: Code Implementation (Drew)
+## Part 2: Code Implementation
 
 ### Database Changes
 - [ ] Add `stripe_customer_id` to users/weddings table

@@ -1,10 +1,10 @@
 # Wedding App — Name Ideas
 
-Brainstormed by Drew 🦈 | Feb 6, 2026
+Brainstorm session, Feb 2026.
 
 ---
 
-## 🌿 Top Picks (My Favorites)
+## Top Picks
 
 ### **Aisle**
 - Clean, one word, instantly wedding-related
@@ -87,16 +87,12 @@ These are likely taken but show the vibe we want:
 
 ---
 
-## Drew's Recommendation
+## Recommendation
 
-**Go with "Aisle" or "Bower"** — they're:
+**"Aisle" or "Bower"** stand out as the strongest options:
 - Short and memorable
 - Instantly wedding-related
 - Sound professional but warm
 - Easy to build a brand around
 
-Second choice: **Gather** or **VendorVow**
-
----
-
-*What vibes with you? We can narrow down from here!*
+Second tier: **Gather** or **VendorVow**.

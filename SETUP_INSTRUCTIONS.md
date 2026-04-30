@@ -1,6 +1,6 @@
-# Wedding App Setup Instructions 🦈
+# Wedding App Setup Instructions
 
-Hey Kameron! Run these when you get home. Two features need database setup:
+One-time database setup for two features that depend on Supabase resources outside the migration files.
 
 ---
 
@@ -146,4 +146,4 @@ CREATE INDEX idx_vendor_documents_vendor_id ON vendor_documents(vendor_id);
 - [ ] Add 3 storage policies (SELECT, INSERT, DELETE)
 - [ ] Run documents table SQL
 
-Hit me up if you run into any issues! 🦈
+Once these are run, the drag-and-drop and document upload features work end-to-end.
