@@ -1,4 +1,4 @@
-# Wedding Vendor HQ
+# Wedding App
 
 A wedding vendor coordination app. Brides add their vendors, send tokenized request links over email, and collect contracts, invoices, availability, and day-of details into one dashboard. Vendors respond from a public link with no login required.
 
